@@ -8,4 +8,4 @@ const AnswerSchema = new mongoose.Schema({
     answers: [{ type: String, required: true }]
 });
 
-export const Answer = mongoose.model('Answer', AnswerSchema);
+export const Answer = mongoose.model('Answer', AnswerSchema); 
