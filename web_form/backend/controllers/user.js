@@ -81,7 +81,7 @@ export const authenticateUser = async (req, res) => {
     }
 }
 
-export const userAnswer = async(req, res)=> {
+export const userAnswer = async (req, res)=> {
     const {userId, stance, rating} = req.body;
     //sequence of data: 
     // Gender, Age, Status, crtScore, dlScore, MR, Stance, Rating
@@ -116,7 +116,7 @@ export const userAnswer = async(req, res)=> {
     if(DL.answers[3]==="I was able to open a new tab in the browser"){dlScore++}
     if(DL.answers[4]!=="I was unable to perform this task"){dlScore++}
     if(DL.answers[5]==="I was able to bookmark a webpage"){dlScore++}
-    if(DL.answers[6]==="I was to clear all cache and cookies from my browser"){dlScore++}
+    if(DL.answers[6]==="I was able to clear all cache and cookies from my browser"){dlScore++}
 
 
     const MR = await Answer.findOne({user_id: userId, section:3})
@@ -137,5 +137,6 @@ export const userAnswer = async(req, res)=> {
         stance: stance,
         rating: rating,
     }
+    // need to run selenium code here to use 'answer' and generate gpt's response.
 
 } 

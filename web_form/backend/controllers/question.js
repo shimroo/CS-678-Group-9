@@ -14,7 +14,6 @@ export const addQuestion = async (req, res) => {
     }
 }
 
-
 export const getQuestion = async (req, res) => {
     const { section } = req.body;
     try {

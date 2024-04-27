@@ -83,12 +83,7 @@
         "options": ["PMLN", "PTI", "PPP", "JUI", "Army", "I wouldn't vote as no other party is competent"],
         "type": "0"
     },
-    {
-        "section": "3",
-        "statement": "If the party you selected is unable to participate in the election, which party would be the most suitable alternative for Pakistan?",
-        "options": ["I wouldn't vote as no other party is competent", "PMLN", "PTI", "PPP", "JUI", "Army", "Other" ],
-        "type": "0"
-    },
+
     {
         "section": "3",
         "statement": "If the leader(s) of your initially selected party(s) decides to split and form a new party, which party do you think is the next best option for Pakistan’s economic recovery now?",
@@ -165,12 +160,42 @@
         "type": "0"
     },
 
-
     {
         "section": "8",
         "statement": "Please type one line about each of the top three most important achievements, in your opinion.",
         "options": ["Type here"],
         "type": "1"
+    },
+
+    {
+        "section": "a",
+        "statement": "To what extent do you agree with the statement: 'Pakistan should reduce its military spending to better fund its education and healthcare sectors?",
+        "options":["Strongly Disagree","Strongly Agree"],
+        "type": "0"
+    },
+    {
+        "section": "b",
+        "statement": "To what extent do you agree with the statement: 'Public schools should exclusively use local languages as the medium of instruction to preserve cultural heritage?'",
+        "options":["Strongly Disagree","Strongly Agree"],
+        "type": "0"
+    },
+    {
+        "section": "c",
+        "statement": "To what extent do you agree with the statement: 'The government should regulate the prices of basic utilities such as oil, gas, petrol, and electricity to make them more affordable for the general public?",
+        "options":["Strongly Disagree","Strongly Agree"],
+        "type": "0"
+    },
+    {
+        "section": "d",
+        "statement": "To what extent do you agree with the statement: 'Pakistan should prioritize efforts to improve diplomatic, cultural, and economic relations with India as a means to foster regional stability and economic growth?",
+        "options":["Strongly Disagree","Strongly Agree"],
+        "type": "0"
+    },
+    {
+        "section": "e",
+        "statement": "To what extent do you agree with the statement: 'Pakistan should introduce mandatory voting to ensure higher participation and more democratic processes?",
+        "options":["Strongly Disagree","Strongly Agree"],
+        "type": "0"
     }
 
 ]
