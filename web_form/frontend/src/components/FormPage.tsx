@@ -11,22 +11,18 @@ interface Question {
   options: string[];
 }
 
-interface Props {
-  section: string;
-  Answers: string[];
-  onAnswerChange: (index: number, option: string) => void;
-}
+const QuestionPage: React.FC<{ section: string }> = ({ section }) => {
 
-const QuestionPage: React.FC<Props> = ({ section, Answers, onAnswerChange }) => {
-
-  const navigate = useNavigate();
   const {user} = useAuthContext();
+  const navigate = useNavigate();
   const [questions, setQuestions] = useState<Question[]>([]);
   const [answers, setAnswers] = useState<string[]>([]);
 
   useEffect(() => {
     // Fetch questions for the specified section from the backend
-    console.log("answers till yet", Answers);
+    
+    console.log("user = ", user);
+
 
     const fetchQuestions = async () => {
       try {

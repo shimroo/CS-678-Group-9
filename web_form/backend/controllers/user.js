@@ -41,6 +41,7 @@ export const getUser = async (req, res) => {
 export const authenticateUser = async (req, res) => {
     const { name, age } = req.body;
     try {
+        console.log("Authenticating user: " + name);
         const ageInt = parseInt(age);
         const user = await User.findOne({ name, age: ageInt });
         if (!user) {
