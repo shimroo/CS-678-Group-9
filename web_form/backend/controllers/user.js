@@ -1,18 +1,41 @@
 import { User } from "../models/user.js";
 import { Answer } from "../models/answers.js";
 
+function generateNumbers(min, max) {
+    let num1 = Math.floor(Math.random() * (max - min + 1)) + min;
+    
+    let num2;
+    do {
+        num2 = Math.floor(Math.random() * (max - min + 1)) + min;
+    } while (num2 === num1);
+
+    return [num1, num2];
+}
+
 //simple setter
 export const setUser = async (req, res) => {                    
-    const { name, age, gender } = req.body;
+    const { name, age, gender, status} = req.body;
     try {
         const user = await User.findOne ({ name });
         console.log(user);
+
         if (user && user.name === name && user.age === parseInt(age)) {
             console.log("User with same name and age already exists");
             return res.status(400).json({ error: "User with same name and age already exists" });
-        }        
+        }    
+        let [num1, num2] = generateNumbers(1,5);
+        const numToString = {
+            1: 'a',
+            2: 'b',
+            3: 'c',
+            4: 'd',
+            5: 'e',
+        };
+        const stance1 = numToString[num1]
+        const stance2 = numToString[num2]
+        if(!status){status = "50000"};
 
-        const newUser = await User.create({ name, age, gender });
+        const newUser = await User.create({ name, age, gender,status,stance1:stance1, stance2:stance2});
         console.log("user created: " + newUser.name);
         return res.status(201).json(newUser);
     }
@@ -114,5 +137,5 @@ export const userAnswer = async(req, res)=> {
         stance: stance,
         rating: rating,
     }
-    
+
 } 
