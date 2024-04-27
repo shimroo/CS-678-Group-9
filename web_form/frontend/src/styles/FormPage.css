@@ -49,9 +49,12 @@ h2 {
 
 .radio-option input[type="radio"] {
   margin-right: 10px;
-  font-size: 40px;
-  color: #333333;
+  font-size: 40px; /* This might not affect the radio button size directly */
+  color: #000000;
+  transform: scale(1.5); /* Scale up the radio button */
+  -webkit-transform: scale(1.5); /* Ensure compatibility with WebKit browsers */
 }
+
 
 .radio-option input[type="radio"]:checked {
   color: #007bff;
