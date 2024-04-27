@@ -33,7 +33,21 @@ const QuestionPage: React.FC<{ section: string }> = ({ section }) => {
       }
     };
 
-    fetchQuestions();
+    const getSection = async () => {
+      try {
+        const response = await axios.post(`http://localhost:8000/answer/get`, { user_id: user._id, section });
+        if (response.status === 200) {
+          console.log("Section already completed");
+          handleSubmit();
+        } else {
+          fetchQuestions();
+        }
+      } catch (error) {
+        console.error("Error fetching section:", error);
+      }
+    }
+
+    getSection();
   }, [section, user]);
 
   const handleAnswerChange = (index: number, option: string) => {
@@ -46,7 +60,7 @@ const QuestionPage: React.FC<{ section: string }> = ({ section }) => {
 
   const handleAnswerSubmit = () => {
     try {
-      const response = axios.post(`http://localhost:8000/question/submit`, { user_id: user._id, section, answers });
+      const response = axios.post(`http://localhost:8000/answer/submit`, { user_id: user._id, section, answers });
       console.log("Answers submitted successfully");
       handleSubmit();
     } catch (error) {

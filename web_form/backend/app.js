@@ -3,6 +3,7 @@ import cors from "cors";
 import { userRouter } from "./routes/user.js";
 import { AdRouter } from "./routes/Ad.js";
 import { questionRouter } from "./routes/question.js";
+import { answersRouter } from "./routes/answers.js";
 
 export const app = express();
 
@@ -14,3 +15,4 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/user", userRouter);
 app.use("/Ad", AdRouter);
 app.use("/question", questionRouter);
+app.use("/answer", answersRouter);

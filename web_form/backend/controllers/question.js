@@ -27,14 +27,3 @@ export const getQuestion = async (req, res) => {
     }
 }
 
-export const submitAnswers = async (req, res) => {
-    const { user_id, section, answers } = req.body;
-    const answer = new Answer({ user_id, section, answers });
-    try {
-        await answer.save();
-        console.log("Answers submitted for section: "+section);
-        res.status(201).json(answer);
-    } catch (error) {
-        res.status(409).json({ message: error.message });
-    }
-}
