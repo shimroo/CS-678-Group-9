@@ -15,6 +15,7 @@ function generateNumbers(min, max) {
 //simple setter
 export const setUser = async (req, res) => {                    
     const { name, age, gender, status} = req.body;
+    console.log(req.body)
     try {
         const user = await User.findOne ({ name });
         console.log(user);
@@ -33,9 +34,9 @@ export const setUser = async (req, res) => {
         };
         const stance1 = numToString[num1]
         const stance2 = numToString[num2]
-        if(!status){status = "50000"};
 
         const newUser = await User.create({ name, age, gender,status,stance1:stance1, stance2:stance2});
+        console.log(newUser);
         console.log("user created: " + newUser.name);
         return res.status(201).json(newUser);
     }
