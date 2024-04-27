@@ -38,14 +38,17 @@ const QuestionPage: React.FC<{ section: string }> = ({ section }) => {
         const response = await axios.post(`http://localhost:8000/answer/get`, { user_id: user._id, section });
         if (response.status === 200) {
           console.log("Section already completed");
-          // handleSubmit();
+          handleSubmit();
+        } else {
+          console.log("Section not completed yet");
+          fetchQuestions();
         }
-        fetchQuestions();
+        // fetchQuestions();
       } catch (error) {
         console.error("Error fetching section:", error);
       }
     }
-
+    
     getSection();
   }, [section, user]);
 
@@ -57,24 +60,37 @@ const QuestionPage: React.FC<{ section: string }> = ({ section }) => {
     console.log("Answers:", answers);
   };
 
-  const handleAnswerSubmit = () => {
+  const handleAnswerSubmit = async (event:any) => {
+    event.preventDefault(); // Prevent default form submission behavior
     try {
-      const response = axios.post(`http://localhost:8000/answer/submit`, { user_id: user._id, section, answers });
+      const response = await axios.post(`http://localhost:8000/answer/submit`, { user_id: user._id, section, answers });
       console.log("Answers submitted successfully");
       handleSubmit();
     } catch (error) {
-      console.error("Error submitting answers");      
+      console.error("Error submitting answers:", error);      
     }
   }
+  
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     let nextSection = parseInt(section) + 1;     
-    // if (section >= "1" && section <= "3") {
-    //   nextSection = parseInt(section) + 1;
-    // } else if (section === "4") {
-    //   nextSection = 6;
-    // }  
 
+    if (section === "3") {
+      switch (answers[0]) {
+        case "PMLN":
+          nextSection = 5;
+          break;
+        case "PTI":
+          nextSection = 4;
+          break;
+        case "PPP":
+          nextSection = 6;
+          break;
+        default:
+          //save MR out of 3 in DB
+          break;
+      }
+    }
     navigate(`/section${nextSection}`);
     console.log("Navigating to /section" + nextSection);
   };
