@@ -1,0 +1,58 @@
+[
+    {
+        "section": "1",
+        "statement": "If you’re running a race and you pass the person in second place, what place are you in?",
+        "options": ["First", "Second", "Third"]
+    },
+    {
+        "section": "1",
+        "statement": "A farmer had 15 sheep and all but 8 died. How many are left?",
+        "options": ["100 Minutes", "5 Minutes", "20 Minutes", "50 Minutes"]
+    },
+    {
+        "section": "1",
+        "statement": "Emily’s father has three daughters. The first two are named April and May. What is the third daughter’s name?",
+        "options": ["June", "July", "Emily"]
+    },
+    {
+        "section": "1",
+        "statement": "In a factory in Lahore, it takes 5 machines 5 minutes to produce 5 cricket bats. How long would it take 100 machines to produce 100 cricket bats?",
+        "options": ["100 Minutes", "5 Minutes", "20 Minutes", "50 Minutes"]
+    },
+    {
+        "section": "2",
+        "statement": "In a mango orchard in Punjab, Pakistan, a type of invasive weed begins to grow and doubles in size every day. If it takes 48 days for the weed to cover the entire orchard, how long would it take for the weed to cover half of the orchard?",
+        "options": ["24 Days", "47 Days", "46 Days", "48 Days"]
+    },
+    {
+        "section": "2",
+        "statement": "Connect to a Wifi Network",
+        "options": ["I was able to connect", "I was unable to connect"]
+    },
+    {
+        "section": "2",
+        "statement": "Open a mobile browser",
+        "options": ["I was able to open my mobile browser", "I was not able to open my mobile browser"]
+    },
+    {
+        "section": "2",
+        "statement": "Look up the birthplace of 'Quaid-e-Azam' and enter in the 'other' text field",
+        "options": []
+    },
+    {
+        "section": "2",
+        "statement": "Open a new tab in the browser",
+        "options": ["I was able to open a new tab in the browser", "I was not able to open a new tab in the browser"]
+    },
+    {
+        "section": "2",
+        "statement": "Bookmark a webpage",
+        "options": ["I was able to bookmark a webpage", "I was not able to bookmark a webpage"]
+    },
+    {
+        "section": "2",
+        "statement": "Clear all cache and cookies from your browser",
+        "options": ["I was able to clear all cache and cookies from my browser", "I was not able to clear all cache and cookies from my browser"]
+    }
+   
+]

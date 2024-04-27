@@ -1,5 +1,6 @@
 import React from 'react'
 import { createContext, useReducer } from "react";
+import { useEffect } from 'react';
 
 
 type AuthContextType = {
@@ -27,6 +28,18 @@ export const AuthContextProvider = ({children}: any) => {
     const [state, dispatch] = useReducer(authReducer, {
         user: null
     })
+
+    // Checking If a User Is Logged In
+    useEffect(() => {
+        const userString = localStorage.getItem('user')
+
+        if (userString)
+        {
+            const user = JSON.parse(userString)
+            dispatch({type: 'LOGIN', payload: user})
+        }
+
+    }, [])
 
     console.log("AuthContext State: ", state)
 

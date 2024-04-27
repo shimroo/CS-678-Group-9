@@ -9,7 +9,7 @@ const Home: React.FC = () => {
     const { user } = useAuthContext();
     const navigate = useNavigate();
     const browse = () => {
-        navigate('/browse');
+        navigate('/section1') 
     }
     const username = user?.username;
 
@@ -19,9 +19,8 @@ const Home: React.FC = () => {
             
             <div className="container">
                 <div>
-                    <p className='home_h1'>Hello, {username}! Welcome to BidMe</p>
-                    <p className="home_subtitle">Discover unique items and bid to win!</p>
-                    <button className="join" onClick={browse} >Browse Auctions</button>
+                    <button className="join" onClick={browse} >English</button>
+                    <button className="join" onClick={browse} >Urdu</button>
                 </div>
             </div>
         </body>
