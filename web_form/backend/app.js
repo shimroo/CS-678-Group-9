@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { userRouter } from "./routes/user.js";
-import { auctionRouter } from "./routes/auction.js";
+import { AdRouter } from "./routes/Ad.js";
 
 export const app = express();
 
@@ -11,4 +11,4 @@ app.use(express.urlencoded({ extended: true }));
 
 
 app.use("/user", userRouter);
-app.use("/auction", auctionRouter);
+app.use("/Ad", AdRouter);

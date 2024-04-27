@@ -7,14 +7,14 @@ export const useSignup = () => {
     const [isLoading, setIsLoading] = useState(false)
     const { dispatch } = useAuthContext()
 
-    const signup = async (name: any, username: any, password: any) => {
+    const signup = async (name: any, age: any, gender: any) => {
         setIsLoading(true)
         setError(null)
 
         try {        
-            const response = await axios.post('http://localhost:8000/user/add', {name, username, password})
+            const response = await axios.post('http://localhost:8000/user/add', {name, age, gender})
             const data = await response.data
-
+            console.log("auth context" + data)
             if (response.status !== 200) {
                 setIsLoading(false)
                 setError(data.message)

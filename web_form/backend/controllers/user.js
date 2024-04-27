@@ -1,33 +1,35 @@
 import { User } from "../models/user.js";
 
-//Sign Up Page              Tested
-export const addUser = async (req, res) => {                     //adds a user to the database
-    const { name, username, password } = req.body;
+//simple setter
+export const setUser = async (req, res) => {                    
+    const { name, age, gender } = req.body;
     try {
-        const user = await User.findOne ({ username });
+        const user = await User.findOne ({ name });
         console.log(user);
-        if (user) {
-            return res.status(400).json({ error: "User already exists" });
-        }
+        if (user && user.name === name && user.age === parseInt(age)) {
+            console.log("User with same name and age already exists");
+            return res.status(400).json({ error: "User with same name and age already exists" });
+        }        
 
-        const newUser = await User.create({ name, username, password });
-        console.log(newUser + " created");
+        const newUser = await User.create({ name, age, gender });
+        console.log("user created: " + newUser.name);
         return res.status(201).json(newUser);
     }
     catch (error) {
-        console.log("user not created");
+        console.log("user not created", error.message);
         return res.status(500).json({ error: error.message });
     }
 }
 
-//Used in multiple Pages    Tested
-export const getUser = async (req, res) => {                        //gets a user info from the database
-    const { username } = req.body;
+//simple getter
+export const getUser = async (req, res) => {
+    const { id } = req.body;
     try {
-        const user = await User .findOne ({ username });
+        const user = await User.findById(id);
         if (!user) {
             return res.status(400).json({ error: "User does not exist" });
         }
+        console.log("details of user with id " + id + " sent");
         return res.status(200).json(user);
     }
     catch (error) {
@@ -35,67 +37,21 @@ export const getUser = async (req, res) => {                        //gets a use
     }
 }
 
-export const getName = async (req, res) => {                        //gets a user name from the database
-    const { username } = req.body;
+//simple authenticator
+export const authenticateUser = async (req, res) => {
+    const { name, age } = req.body;
     try {
-        const user = await User .findOne ({ username });
+        const ageInt = parseInt(age);
+        const user = await User.findOne({ name, age: ageInt });
         if (!user) {
+            console.log("User does not exist");
             return res.status(400).json({ error: "User does not exist" });
         }
-        console.log(user.name);
-        return res.status(200).json(user.name);
-    }
-    catch (error) {
-        return res.status(500).json({ error: error.message });
-    }
-}
-
-//Login Page                Tested
-export const authenticateUser = async (req, res) => {               //authenticates a user
-    const { username, password } = req.body;
-    try {
-        const user = await User .findOne ({ username });
-        if (!user) {
-            return res.status(400).json({ error: "User does not exist" });
-        }
-        if (user.password != password) {
-            return res.status(400).json({ error: "Incorrect password" });
-        }
+        console.log("user authenticated");
         return res.status(200).json(user);
     }
     catch (error) {
-        return res.status(500).json({ error: error.message });
-    }
-}
-
-//Change Password           Tested
-export const changePassword = async (req, res) => {                 //changes a user's password
-    const { username, password, new_password } = req.body;
-    try {
-        const user = await User .findOne ({ username });
-        if (!user) {
-            console.log("user does not exist" + username);
-            return res.status(400).json({ error: "User does not exist" });
-        }
-        if (user.password != password) {
-            console.log("incorrect password");
-            return res.status(205).json({ error: "Incorrect password" });
-        }
-        if (user.password == new_password) {
-            console.log("new password must be different");
-            return res.status(400).json({ error: "New password must be different" });
-        }
-        if (!new_password) {
-            console.log("new password cannot be empty");
-            return res.status(400).json({ error: "New password cannot be empty" });    
-        }
-        user.password = new_password;
-        await user.save();
-        console.log("password changed");
-        return res.status(200).json(user);
-    }
-    catch (error) {
-        console.log("password not changed");
+        console.log("user not authenticated", error.message);
         return res.status(500).json({ error: error.message });
     }
 }

@@ -3,7 +3,7 @@ import http from "http";
 import { app } from "./app.js";
 import { config } from "dotenv";
 import { connect } from "./utils/db.js";
-import { Auction } from "./models/auction.js";
+import { Ad } from "./models/Ad.js";
 
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -20,60 +20,33 @@ config({
 io.on("connection", (socket) => {
   console.log("USER CONNECTED:", socket.id);
 
-  socket.on("place-bid", async (data) => {
-    try {
-      const { id, bidAmount, user_id } = data;
-      const auction = await Auction.findById(id);
-      if (!auction) {
-        console.log("Auction does not exist");
-        throw new Error("Auction does not exist");
-      }
 
-      auction.current_bid = bidAmount;
-      auction.current_bidder = user_id;
-
-      await auction.save();
-      console.log("BID PLACED:", auction);
-
-      io.emit('new-bid', { id, bidAmount});
-      console.log("BID EMITTED:", auction);
-    } catch (error) {
-      console.error("ERROR:", error.message);
-    }
-  } );
-
-  const handleAuctionEnd = async (id) => {                                      //ends an auction
-    const auction = await Auction.findById(id);
-    if (!auction) {
-      console.log("Auction does not exist");
-      throw new Error("Auction does not exist");
-    }
-
-    auction.owned_by = auction.current_bidder;
-
-    await auction.save();
-    console.log("AUCTION ENDED:", auction);
-
-    io.emit('auction-ended', { id });
-    console.log("AUCTION EMITTED:", auction);
-  };
-
-  const checkAuctionEnd = async (id) => {                                       //checks all auctions and initiates end if time is up
-    const auctions = await Auction.find({end_time: {$lt: new Date()}});
-    if (auctions.length > 0) {
-        auctions.forEach(async (auction) => {
-            await handleAuctionEnd(auction._id);
-        });
-    }
-  }
-
-  setInterval(() => {                                                           //checks every 59 seconds
-    checkAuctionEnd();
-  }
-  , 59000);
 
   socket.on("disconnect", () => {
     console.log("USER DISCONNECTED:", socket.id);
+  });
+
+  // Event listener for receiving ad requests
+  socket.on('get_Ad', (data) => {
+    console.log('Received request to get Ad, sending response...');
+
+    const pythonProcess = spawn('python3', ['gpt_script.py', JSON.stringify(data)]);
+
+    pythonProcess.stdout.on('data', (output) => {
+      const outputData = output.toString().trim();
+      console.log('sending output to client');
+      io.emit('seleniumOutput', outputData);
+
+      // Save output to database
+      const newOutput = new Output({ output: outputData });
+      newOutput.save()
+        .then(() => console.log('Output saved to database'))
+        .catch((err) => console.error('Error saving output:', err));
+    });
+
+    pythonProcess.stderr.on('data', (data) => {
+      console.error(`stderr: ${data}`);
+    });
   });
   
 });
