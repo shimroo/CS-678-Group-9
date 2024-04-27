@@ -4,7 +4,7 @@ const userSchema = new mongoose.Schema({
     name : { type: String, required: true },
     age : { type: Number, required: true },
     gender : { type: String, required: true },
-    status : { type: String, required: true, default:"50000"},
+    status : { type: String, required: true, default:"middle"},
     stance1 : { type: String, required: true },
     stance2 : { type: String, required: true },
     rate1 : { type: String },

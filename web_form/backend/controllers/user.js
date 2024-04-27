@@ -82,6 +82,7 @@ export const authenticateUser = async (req, res) => {
     }
 }
 
+// get user's answer data
 export const userAnswer = async (req, res)=> {
     const {userId, stance, rating} = req.body;
     //sequence of data: 

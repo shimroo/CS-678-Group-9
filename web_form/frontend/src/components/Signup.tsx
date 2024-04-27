@@ -8,6 +8,7 @@ const Signup: React.FC = () => {
     const [age, setAge] = useState('');
     const [gender, setGender] = useState('Male'); // Default value for gender dropdown
     const [name, setName] = useState('');
+    const [status, setStatus] = useState('');
     const navigate = useNavigate();
 
     const handleSubmit = async (e: any) => {
@@ -17,7 +18,7 @@ const Signup: React.FC = () => {
                 console.log('Age must be above 14');
                 return;
             }
-            signup(name, age, gender);
+            signup(name, age, gender, status);
             console.log('Signup successful');
             navigate('/login');
 
@@ -49,6 +50,17 @@ const Signup: React.FC = () => {
                         <option value="Prefer not to say">Prefer not to say</option>
                     </select>
                 </div>
+
+                <div className="form-group">
+                    <label htmlFor="status">Household Income</label>
+                    <select id="status" name="status" onChange={(e) => setStatus(e.target.value)} value={status} required>
+                        <option value="lower">less than 35,000</option>
+                        <option value="middle">35,000 - 80,000</option>
+                        <option value="upper">more than 80,000 </option>
+                        <option value="middle">Prefer not to say</option>
+                    </select>
+                </div>
+
                 <div className="form-group">
                     <button type="submit">Sign Up</button>
                 </div>
