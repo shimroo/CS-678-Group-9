@@ -9,6 +9,7 @@ interface Question {
   section: string;
   statement: string;
   options: string[];
+  type:string;
 }
 
 const QuestionPage: React.FC<{ section: string }> = ({ section }) => {
@@ -17,6 +18,7 @@ const QuestionPage: React.FC<{ section: string }> = ({ section }) => {
   const navigate = useNavigate();
   const [questions, setQuestions] = useState<Question[]>([]);
   const [answers, setAnswers] = useState<string[]>([]);
+  const [additionalFields, setAdditionalFields] = useState(0);
 
   useEffect(() => {
     // Fetch questions for the specified section from the backend
@@ -38,14 +40,17 @@ const QuestionPage: React.FC<{ section: string }> = ({ section }) => {
         const response = await axios.post(`http://localhost:8000/answer/get`, { user_id: user._id, section });
         if (response.status === 200) {
           console.log("Section already completed");
-          // handleSubmit();
+          handleSubmit();
+        } else {
+          console.log("Section not completed yet");
+          fetchQuestions();
         }
-        fetchQuestions();
+        // fetchQuestions();
       } catch (error) {
         console.error("Error fetching section:", error);
       }
     }
-
+    
     getSection();
   }, [section, user]);
 
@@ -57,24 +62,46 @@ const QuestionPage: React.FC<{ section: string }> = ({ section }) => {
     console.log("Answers:", answers);
   };
 
-  const handleAnswerSubmit = () => {
+  const handleAnswerSubmit = async (event:any) => {
+    event.preventDefault(); // Prevent default form submission behavior
     try {
-      const response = axios.post(`http://localhost:8000/answer/submit`, { user_id: user._id, section, answers });
+      const response = await axios.post(`http://localhost:8000/answer/submit`, { user_id: user._id, section, answers });
       console.log("Answers submitted successfully");
       handleSubmit();
     } catch (error) {
-      console.error("Error submitting answers");      
+      console.error("Error submitting answers:", error);      
     }
   }
 
-  const handleSubmit = () => {
-    let nextSection = parseInt(section) + 1;     
-    // if (section >= "1" && section <= "3") {
-    //   nextSection = parseInt(section) + 1;
-    // } else if (section === "4") {
-    //   nextSection = 6;
-    // }  
 
+    const handleAddField = () => {
+      if (additionalFields <3) {
+        setAdditionalFields(additionalFields + 1);
+      }
+    };
+  
+
+  
+
+  const handleSubmit = async () => {
+    let nextSection = parseInt(section) + 1;     
+
+    if (section === "4") {
+      switch (answers[0]) {
+        case "PMLN":
+          nextSection = 6;
+          break;
+        case "PTI":
+          nextSection = 5;
+          break;
+        case "PPP":
+          nextSection = 7;
+          break;
+        default:
+          nextSection = 9;
+          break;
+      }
+    }
     navigate(`/section${nextSection}`);
     console.log("Navigating to /section" + nextSection);
   };
@@ -88,19 +115,40 @@ const QuestionPage: React.FC<{ section: string }> = ({ section }) => {
           {questions.map((question, index) => (
             <fieldset className="question" key={question._id}>
               <p>{question.statement}</p>
-              {question.options.map((option, optionIndex) => (
-                <div className="radio-option" key={optionIndex}>
-                  <input
-                    type="radio"
-                    id={`question-${index}-${optionIndex}`}
-                    name={`question-${index}`}
-                    value={option}
-                    checked={answers[index] === option}
-                    onChange={(e) => handleAnswerChange(index, e.target.value)}
-                  />
-                  <label htmlFor={`question-${index}-${optionIndex}`}>{option}</label>
-                </div>
-              ))}
+              {question.type === "0" ? (
+                question.options.map((option, optionIndex) => (
+                  <div className="radio-option" key={optionIndex}>
+                    <input
+                      type="radio"
+                      id={`question-${index}-${optionIndex}`}
+                      name={`question-${index}`}
+                      value={option}
+                      checked={answers[index] === option}
+                      onChange={(e) => handleAnswerChange(index, e.target.value)}
+                    />
+                    <label htmlFor={`question-${index}-${optionIndex}`}>{option}</label>
+                  </div>
+                ))
+              ) : (
+                <>
+                  {[...Array(additionalFields)].map((_, textIndex) => (
+                    <input
+                      key={`question-${index}-${textIndex}`}
+                      type="text"
+                      id={`question-${index}-${textIndex}`}
+                      name={`question-${index}`}
+                      value={answers[textIndex] || ''}
+                      onChange={(e) => handleAnswerChange(textIndex, e.target.value)}
+                      className="text-input"
+                    />
+                  ))}
+                  {additionalFields <3 && (
+                    <button type="button" onClick={handleAddField}>
+                      Add Field
+                    </button>
+                  )}
+                </>
+              )}
             </fieldset>
           ))}
           <button type="submit" className="question-submit">Submit</button>
@@ -108,7 +156,6 @@ const QuestionPage: React.FC<{ section: string }> = ({ section }) => {
       </div>
     </div>
   );
-  
 };
 
 export default QuestionPage;
