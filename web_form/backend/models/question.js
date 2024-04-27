@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { User } from "./user";
 
 const QuestionSchema = new mongoose.Schema({
     section: { type: String, required: true },
