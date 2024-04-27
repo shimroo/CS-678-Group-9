@@ -75,19 +75,19 @@ const QuestionPage: React.FC<{ section: string }> = ({ section }) => {
   const handleSubmit = async () => {
     let nextSection = parseInt(section) + 1;     
 
-    if (section === "3") {
+    if (section === "4") {
       switch (answers[0]) {
         case "PMLN":
-          nextSection = 5;
-          break;
-        case "PTI":
-          nextSection = 4;
-          break;
-        case "PPP":
           nextSection = 6;
           break;
+        case "PTI":
+          nextSection = 5;
+          break;
+        case "PPP":
+          nextSection = 7;
+          break;
         default:
-          //save MR out of 3 in DB
+          nextSection = 9;
           break;
       }
     }
