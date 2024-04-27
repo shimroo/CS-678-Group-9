@@ -1,4 +1,6 @@
 import { Question } from "../models/question.js";
+import { Answer } from "../models/answers.js";
+
 
 export const addQuestion = async (req, res) => {
     const { section, statement, options } = req.body;
@@ -25,7 +27,7 @@ export const getQuestion = async (req, res) => {
     }
 }
 
-const submitAnswers = async (req, res) => {
+export const submitAnswers = async (req, res) => {
     const { user_id, section, answers } = req.body;
     const answer = new Answer({ user_id, section, answers });
     try {
