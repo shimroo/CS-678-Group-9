@@ -20,9 +20,7 @@ const QuestionPage: React.FC<{ section: string }> = ({ section }) => {
 
   useEffect(() => {
     // Fetch questions for the specified section from the backend
-    
-    console.log("user = ", user);
-
+    console.log("idk man user = ", user);
 
     const fetchQuestions = async () => {
       try {
@@ -36,18 +34,33 @@ const QuestionPage: React.FC<{ section: string }> = ({ section }) => {
     };
 
     fetchQuestions();
-  }, [section]);
+  }, [section, user]);
 
   const handleAnswerChange = (index: number, option: string) => {
     const newAnswers = [...answers];
     newAnswers[index] = option;
     setAnswers(newAnswers);
+
+    console.log("Answers:", answers);
   };
 
+  const handleAnswerSubmit = () => {
+    try {
+      const response = axios.post(`http://localhost:8000/question/submit`, { user_id: user._id, section, answers });
+      console.log("Answers submitted successfully");
+      handleSubmit();
+    } catch (error) {
+      console.error("Error submitting answers");      
+    }
+  }
+
   const handleSubmit = () => {
-    // Submit answers to backend
-    console.log("Submitted answers:", answers);
-    let nextSection = parseInt(section) + 1;
+    let nextSection = 1;     
+    if (section >= "1" && section <= "3") {
+      nextSection = parseInt(section) + 1;
+    } else if (section === "4") {
+      nextSection = 6;
+    }
 
     navigate(`/section${nextSection}`);
     console.log("Navigating to /section" + nextSection);
@@ -58,7 +71,7 @@ const QuestionPage: React.FC<{ section: string }> = ({ section }) => {
       <Navbar /> 
       <div className="question-container">
         <h2>Section: {section}</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleAnswerSubmit}>
           {questions.map((question, index) => (
             <div className="question" key={question._id}>
               <h3>Question {index + 1}</h3>
