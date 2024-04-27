@@ -1,0 +1,70 @@
+
+.container {
+  margin-top: 70px;
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-form h2 {
+  margin-bottom: 20px; /* More space above the form title */
+  color: #333;
+  font-size: 24px; /* Slightly larger for emphasis */
+}
+
+.form-group {
+  margin-bottom: 15px; /* Consistent spacing between form elements */
+  text-align: left; /* Aligns labels and inputs to the start */
+}
+
+label {
+  display: block;
+  margin-bottom: 5px; /* Space between label and input */
+  color: #666; /* Soft color for the label */
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px; /* More padding for easier interaction */
+  border: 1px solid #ccc; /* Lighter border */
+  border-radius: 5px; /* Rounded edges for a softer look */
+  margin-bottom: 10px; /* Space after each input */
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff; /* Vibrant, consistent button color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s; /* Smooth transition for feedback */
+}
+
+button:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}
+
+.signup-link {
+  margin-top: 20px; /* Space between form and sign-up link */
+}
+
+.signup-link a {
+  color: #007bff;
+  text-decoration: none; /* Removes underline */
+}
+
+.signup-link a:hover {
+  text-decoration: underline; /* Adds an underline on hover for clarity */
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 600px) {
+  .container {
+    padding: 20px; /* Less padding for smaller screens */
+  }
+}

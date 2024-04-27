@@ -1,0 +1,103 @@
+.browse_container {
+  max-width: 800px;
+  margin: 70px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  /* Optional: may enhance visual separation */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* Subtle shadow for depth */
+  border-radius: 8px;
+  /* Softened edges */
+}
+
+.browse_search-container {
+  display: flex;
+  justify-content: space-between;
+  /* Improved spacing */
+  margin-bottom: 40px;
+  /* Increased spacing for visual separation */
+}
+
+.browse_search-container input[type="text"] {
+  flex-grow: 1;
+  /* Input field takes available space */
+  padding: 10px;
+  border: 2px solid #ddd;
+  /* Lighter border */
+  border-radius: 20px;
+  /* Rounded edges for input */
+  margin-right: 10px;
+  /* Adjusted spacing */
+}
+
+.browse_search-container button {
+  padding: 10px 20px;
+  border: none;
+  /* Cleaner look without border */
+  border-radius: 20px;
+  /* Consistent rounded edges */
+  background-color: #007bff;
+  /* A more vibrant button color */
+  color: white;
+  width: auto;
+  height: 100%;
+  /* Contrast text color */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  /* Smooth transition for interaction */
+}
+
+.browse_search-container button:hover {
+  background-color: #0056b3;
+  /* Darker shade on hover for feedback */
+}
+
+.browse_auction-card {
+  display: flex;
+  border: none;
+  /* Remove border for a cleaner look */
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  /* Match container background */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  /* Subtle shadow for depth */
+}
+
+.browse_item-image {
+  width: 150px;
+  /* Adjusted for balance */
+  height: 150px;
+  /* Uniform height */
+  object-fit: cover;
+  /* Ensure images cover the area nicely */
+  border-radius: 10px;
+  /* Rounded corners for images */
+  margin-right: 20px;
+}
+
+.browse_auction-details {
+  flex: 1;
+}
+
+.browse_auction-title,
+.browse_description,
+p {
+  color: #333;
+  /* Darker text for better readability */
+}
+
+.browse_auction-title {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 24px;
+  /* Larger title for emphasis */
+}
+
+.browse_description {
+  margin-bottom: 15px;
+  /* More spacing for clarity */
+  font-size: 16px;
+  /* Slightly larger for readability */
+}
