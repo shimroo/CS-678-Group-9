@@ -6,3 +6,5 @@ const AnswerSchema = new mongoose.Schema({
     section: { type: String, required: true },
     answers: [{ type: String, required: true }]
 });
+
+export const Answer = mongoose.model('Answer', AnswerSchemaSchema);
