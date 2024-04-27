@@ -1,26 +1,38 @@
-
 .home_h1 {
-  color: limegreen;
-  font-size: 60px;
+  color: #070706; /* maintained the softer orange */
+  font-size: 72px; /* increased from 60px for a larger heading */
   margin: 0px;
-  padding: 0px;
+  padding: 10px 0; /* kept the vertical padding */
+  font-family: 'Arial ', sans-serif;
 }
+
 
 .home_subtitle {
-  font-size: 20px;
+  font-size: 22px; /* increased from 18px to make the subtitle more noticeable */
   text-align: center;
-  padding-left: 10px; /* Adjusted padding */
-  margin: 0;
+  padding-left: 15px; /* maintained padding for alignment */
+  margin: 10px 0; /* slightly increased margin for more space around the text */
+  font-family: 'Arial', sans-serif;
 }
+
 
 .join {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 15px 30px; /* Adjusted padding */
-  border-radius: 40px;
-  background-color: mediumseagreen;
+  padding: 15px 40px; /* increased padding for a larger button */
+  border-radius: 25px; /* kept the modern pill shape */
+  background-color: #16a085;; /* kept the refreshing teal */
   color: white;
-  margin-top: 20px;
-  margin-right: 20px; /* Adjusted margin */
+  font-size: 50px; /* increased font size within the button for better readability */
+  margin: 25px 10px; /* increased margin for better isolation */
+  transition: background-color 0.3s; /* smooth transition for hover effect */
+  cursor: pointer;
+  width: 300; /* adjust width as needed or use a specific width */
+  min-width: 300px; /* ensures the button is not too small */
+}
+
+
+.join:hover {
+  background-color: #0a0e0d; /* lighter shade of teal on hover */
 }
