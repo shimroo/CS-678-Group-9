@@ -3,31 +3,31 @@
         "section": "1",
         "statement": "If you’re running a race and you pass the person in second place, what place are you in?",
         "options": ["First", "Second", "Third"],
-        "input": "0"
+        "type": "0"
     },
     {
         "section": "1",
         "statement": "A farmer had 15 sheep and all but 8 died. How many are left?",
         "options": ["8", "7", "None", "15"],
-        "input": "0"
+        "type": "0"
     },
     {
         "section": "1",
         "statement": "Emily’s father has three daughters. The first two are named April and May. What is the third daughter’s name?",
         "options": ["June", "July", "Emily", "Other" ],
-        "input": "0"
+        "type": "0"
     },
     {
         "section": "1",
         "statement": "In a factory in Lahore, it takes 5 machines 5 minutes to produce 5 cricket bats. How long would it take 100 machines to produce 100 cricket bats?",
         "options": ["100 Minutes", "5 Minutes", "20 Minutes", "50 Minutes"],
-        "input": "0"
+        "type": "0"
     },
     {
         "section": "1",
         "statement": "In a mango orchard in Punjab, Pakistan, a type of invasive weed begins to grow and doubles in size every day. If it takes 48 days for the weed to cover the entire orchard, how long would it take for the weed to cover half of the orchard?",
         "options": ["24 Days", "47 Days", "46 Days", "48 Days"],
-        "input": "0"
+        "type": "0"
     },
 
 
@@ -36,43 +36,43 @@
         "section": "2",
         "statement": "Connect to a Wifi Network",
         "options": ["I was able to connect", "I was unable to connect"],
-        "input": "0"
+        "type": "0"
     },
     {
         "section": "2",
         "statement": "Open a mobile browser",
         "options": ["I was able to open my mobile browser", "I was not able to open my mobile browser"],
-        "input": "0"
+        "type": "0"
     },
     {
         "section": "2",
         "statement": "Look up the birthplace of 'Quaid-e-Azam' and choose",
         "options": ["Karachi", "I was unable to do so"],
-        "input": "0"
+        "type": "0"
     },
     {
         "section": "2",
         "statement": "Observe a news headline on social media and find information relevant to the headline using a search engine.",
         "options": ["I was able to do this", "I was unable to do this"],
-        "input": "0"
+        "type": "0"
     },
     {
         "section": "2",
         "statement": "Open a new tab in the browser",
         "options": ["I was able to open a new tab in the browser", "I was not able to open a new tab in the browser"],
-        "input": "0"
+        "type": "0"
     },
     {
         "section": "2",
         "statement": "Bookmark a webpage",
         "options": ["I was able to bookmark a webpage", "I was not able to bookmark a webpage"],
-        "input": "0"
+        "type": "0"
     },
     {
         "section": "2",
         "statement": "Clear all cache and cookies from your browser",
         "options": ["I was able to clear all cache and cookies from my browser", "I was not able to clear all cache and cookies from my browser"],
-        "input": "0"
+        "type": "0"
     },
 
 
@@ -81,19 +81,19 @@
         "section": "3",
         "statement": "Considering the inflation rates from 2009 to 2022, which ruling party do you believe is best suited to ensure the country's future economic well-being?",
         "options": ["PMLN", "PTI", "PPP", "JUI", "Army", "I wouldn't vote as no other party is competent"],
-        "input": "0"
+        "type": "0"
     },
     {
         "section": "3",
         "statement": "If the party you selected is unable to participate in the election, which party would be the most suitable alternative for Pakistan?",
         "options": ["I wouldn't vote as no other party is competent", "PMLN", "PTI", "PPP", "JUI", "Army", "Other" ],
-        "input": "0"
+        "type": "0"
     },
     {
         "section": "3",
         "statement": "If the leader(s) of your initially selected party(s) decides to split and form a new party, which party do you think is the next best option for Pakistan’s economic recovery now?",
         "options": ["Newly formed party with Initial leaders", "Old party with remaining leaders", "Any party other than these two"],
-        "input": "0"
+        "type": "0"
     },
 
     
@@ -101,7 +101,7 @@
         "section": "4",
         "statement": "From among the following, which ruling party are you most in favor of right now?",
         "options": ["PMLN", "PTI", "PPP", "JUI", "Army"],
-        "input": "0"
+        "type": "0"
     },
 
 
@@ -109,19 +109,19 @@
         "section": "5",
         "statement": "Nawaz Sharif and his party are known for building South Asia's first motorway (M2). It linked parts of Punjab and was later extended to Peshawar, becoming M1. How would you rate Nawaz Sharif and his party for this work?",
         "options": ["Worthless", "Valuable"],
-        "input": "0"
+        "type": "0"
     },
     {
         "section": "5",
         "statement": "Imran Khan is accused of hypocrisy regarding the 'VIP culture.' Despite criticizing his opponents for it, he used private jets provided by his friends and delayed public flights when he was not on time during his campaign. Do you think this criticism of Imran Khan is valid?",
         "options": ["Valid", "Invalid"],
-        "input": "0"
+        "type": "0"
     },
     {
         "section": "5",
         "statement": "Imran Khan was in office for more than 3 years. Can you enlist three achievements credited to him or his party from that time?",
         "options": ["Yes, I can enlist three achievements.", "No, I can not."],
-        "input": "0"
+        "type": "0"
     },
 
 
@@ -130,19 +130,19 @@
         "section": "6",
         "statement": "In his first speech as prime minister, Imran Khan(IK) addressed concerns regarding relations with the USA. He emphasized the importance of future relations being mutually beneficial for both countries, rather than one-sided as they currently stand. This moment showed that Pakistan is ready to stand up against even strong pressures, like those from the USA, and speak up for its rights and importance in the world. How would you rate this work of IK and his party?",
         "options": ["Pathetic", "Admirable"],
-        "input": "0"
+        "type": "0"
     },
     {
         "section": "6",
         "statement": "While Nawaz Sharif blames Imran Khan for making deals with the establishment it is widely rumored that Nawaz Sharif was guided and supported by military dictator Gen Zia ul-Haq back in the late 1970s and played a major role in the military establishment's various plans to destroy the PPP party of the former prime minister, the late Benazir Bhutto. Do you agree with this claim?",
         "options": ["Valid", "Invalid"],
-        "input": "0"
+        "type": "0"
     },
     {
         "section": "6",
         "statement": "Nawaz Shareef was in office for more than 4 years when his party last formed a government. Can you enlist three achievements credited to him or his party from that time?",
         "options": ["Yes, I can enlist three achievements.", "No, I can not."],
-        "input": "0"
+        "type": "0"
     },
 
 
@@ -150,19 +150,19 @@
         "section": "7",
         "statement": "Nawaz Sharif and his party are known for building South Asia's first motorway (M2). It linked parts of Punjab and was later extended to Peshawar, becoming M1. How would you rate Nawaz Sharif and his party for this work?",
         "options": ["Worthless", "Valuable"],
-        "input": "0"
+        "type": "0"
     },
     {
         "section": "7",
         "statement": "In 1995, Zardari made a deal with a French aircraft manufacturing company, giving them full rights to sell new jets to Pakistan. In return, Zardari was supposed to receive a 5% commission paid to a company controlled by Zardari in Switzerland. This deal failed with the dismissal of zardari’s goverment. Do you think Zardari could have been involved in such a deal?",
         "options": ["Valid", "Invalid"],
-        "input": "0"
+        "type": "0"
     },
     {
         "section": "7",
         "statement": "Asif Ali Zardari was in office for more than 4 years when his party last formed a government. Can you enlist three achievements credited to him or his party from that time? ",
         "options": ["Yes, I can enlist three achievements.", "No, I can not."],
-        "input": "0"
+        "type": "0"
     },
 
 
@@ -170,7 +170,7 @@
         "section": "8",
         "statement": "Please type one line about each of the top three most important achievements, in your opinion.",
         "options": ["Type here"],
-        "input": "1"
+        "type": "1"
     }
 
 ]

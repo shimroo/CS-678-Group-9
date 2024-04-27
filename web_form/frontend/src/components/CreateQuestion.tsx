@@ -10,6 +10,7 @@ const CreateAuction: React.FC = () => {
     const [section, setSection] = useState<number>(1);
     const [statement, setStatement] = useState<string>('');
     const [options, setOptions] = useState<string[]>(['']);
+    const [type, setType] = useState<number>(1);
 
     // Function to add a new option field
     const addOption = () => {
@@ -32,7 +33,7 @@ const CreateAuction: React.FC = () => {
     const createQuestion = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8000/question/add', { section, statement, options});
+            const response = await axios.post('http://localhost:8000/question/add', { section, statement, options, type });
             console.log(response.data);
             alert('Question created successfully!');
             // Clear the form fields after successful submission
@@ -61,6 +62,8 @@ const CreateAuction: React.FC = () => {
                             <input type="text" value={option} onChange={(e) => handleOptionChange(index, e.target.value)} onKeyDown={(e) => handleKeyPress(e, index)} />
                         </div>
                     ))}
+                    <label htmlFor="type">Type:</label>
+                    <input type="number" id="type" name="type" min={1} max={4} value={type} onChange={(e) => setType(parseInt(e.target.value))} />
                     <button type="button" onClick={addOption}>Add Option</button>
                     <button type="submit">Create Question</button>
                 </form>

@@ -38,10 +38,9 @@ const QuestionPage: React.FC<{ section: string }> = ({ section }) => {
         const response = await axios.post(`http://localhost:8000/answer/get`, { user_id: user._id, section });
         if (response.status === 200) {
           console.log("Section already completed");
-          handleSubmit();
-        } else {
-          fetchQuestions();
+          // handleSubmit();
         }
+        fetchQuestions();
       } catch (error) {
         console.error("Error fetching section:", error);
       }
@@ -69,12 +68,12 @@ const QuestionPage: React.FC<{ section: string }> = ({ section }) => {
   }
 
   const handleSubmit = () => {
-    let nextSection = 1;     
-    if (section >= "1" && section <= "3") {
-      nextSection = parseInt(section) + 1;
-    } else if (section === "4") {
-      nextSection = 6;
-    }
+    let nextSection = parseInt(section) + 1;     
+    // if (section >= "1" && section <= "3") {
+    //   nextSection = parseInt(section) + 1;
+    // } else if (section === "4") {
+    //   nextSection = 6;
+    // }  
 
     navigate(`/section${nextSection}`);
     console.log("Navigating to /section" + nextSection);

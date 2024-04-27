@@ -3,8 +3,8 @@ import { Answer } from "../models/answers.js";
 
 
 export const addQuestion = async (req, res) => {
-    const { section, statement, options } = req.body;
-    const question = new Question({ section, statement, options });
+    const { section, statement, options, type } = req.body;
+    const question = new Question({ section, statement, options, type });
     try {
         await question.save();
         console.log("Question created: "+question.statement);
