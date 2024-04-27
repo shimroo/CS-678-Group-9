@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from "../hooks/useAuth";
 import Navbar from './Navbar';
-
+import '../styles/FormPage.css';
 interface Question {
   _id: string;
   section: string;
@@ -67,34 +67,35 @@ const QuestionPage: React.FC<{ section: string }> = ({ section }) => {
   };
 
   return (
-    <body>
-      <Navbar /> 
+    <div>
+      <Navbar />
       <div className="question-container">
         <h2>Section: {section}</h2>
         <form onSubmit={handleAnswerSubmit}>
           {questions.map((question, index) => (
-            <div className="question" key={question._id}>
-              <h3>Question {index + 1}</h3>
+            <fieldset className="question" key={question._id}>
               <p>{question.statement}</p>
-              <select
-                className="question-select"
-                value={answers[index]}
-                onChange={(e) => handleAnswerChange(index, e.target.value)}
-              >
-                <option value="">Select an option</option>
-                {question.options.map((option, optionIndex) => (
-                  <option key={optionIndex} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
-            </div>
+              {question.options.map((option, optionIndex) => (
+                <div className="radio-option" key={optionIndex}>
+                  <input
+                    type="radio"
+                    id={`question-${index}-${optionIndex}`}
+                    name={`question-${index}`}
+                    value={option}
+                    checked={answers[index] === option}
+                    onChange={(e) => handleAnswerChange(index, e.target.value)}
+                  />
+                  <label htmlFor={`question-${index}-${optionIndex}`}>{option}</label>
+                </div>
+              ))}
+            </fieldset>
           ))}
           <button type="submit" className="question-submit">Submit</button>
         </form>
       </div>
-    </body>
+    </div>
   );
+  
 };
 
 export default QuestionPage;
