@@ -105,17 +105,13 @@ const QuestionPage: React.FC<{ section: string }> = ({ section }) => {
         console.error("Error fetching questions:", error);
       }
     }
-    
-    getSection();
-    // getList();
 
-    //if section 8 and listbool is false, navigate to section 9
-    if (section === "8" ) {
-      getList();
-      if (!listBool){ 
-        navigate(`/section9`);
-      }
+    const list_getter = async () => {
+      await getList();
     }
+    
+    list_getter();   
+    getSection();
 
   }, [section, user]);
 
@@ -151,7 +147,15 @@ const QuestionPage: React.FC<{ section: string }> = ({ section }) => {
   
 
   const handleSubmit = async () => {
-    let nextSection = parseInt(section) + 1;     
+    let nextSection = parseInt(section) + 1;   
+    
+    if (section === "5" || section === "6" || section === "7") {
+      if (listBool) {
+        nextSection = 8;
+      } else {
+        nextSection = 9;
+      }
+    }
 
     if (section === "4") {
       switch (answers[0]) {
@@ -236,14 +240,37 @@ const QuestionPage: React.FC<{ section: string }> = ({ section }) => {
                 </div>
               ))
             ) : question.type === "1" ? (
-              <input
-                type="text"
-                id={`question-${index}`}
-                name={`question-${index}`}
-                value={answers[index] || ''}
-                onChange={(e) => handleAnswerChange(index, e.target.value)}
-                className="text-input"
-              />
+              <>
+                {[...Array(additionalFields)].map((_, textIndex) => (
+                  <input
+                    key={`question-${index}-${textIndex}`}
+                    type="text"
+                    id={`question-${index}-${textIndex}`}
+                    name={`question-${index}`}
+                    value={answers[textIndex] || ''}
+                    onChange={(e) => handleAnswerChange(textIndex, e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.keyCode === 13) { // Check if Enter key is pressed
+                        e.preventDefault(); // Prevent default form submit on enter
+                        if (textIndex === additionalFields - 1 && additionalFields < 3) {
+                          handleAddField(); // Add new field only if it's the last field and fewer than 3 fields exist
+                        } else if (textIndex === 2 && answers[0] && answers[1] && answers[2]) {
+                          // Submit form here if all three fields are filled
+                          console.log('Form is ready to be submitted');
+                          // Add your submit function here
+                        }
+                      }
+                    }}
+                    className="text-input"
+                  />
+                ))}
+                {additionalFields < 3 && (
+                  <button type="button" onClick={handleAddField}>
+                    Add Field
+                  </button>
+                )}
+              </>
+            
             ) : (
               <div>
                 <input
