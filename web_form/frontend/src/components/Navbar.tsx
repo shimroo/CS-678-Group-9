@@ -17,7 +17,6 @@ const Navbar: React.FC = () => {
             <ul className="navbar_container">
                 <span className="navbar_sub-container">
                     <li onClick={() => navigate('/home')}>Home</li>
-                    <li onClick={() => navigate('/browse')}>Browse</li>
                 </span>
                 <span className="navbar_sub-container"> 
                     <li className="logout" onClick={myprofile}>My Profile</li>

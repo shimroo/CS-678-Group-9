@@ -13,6 +13,7 @@ const Profile: React.FC = () => {
     const username = user?.username;                                     //for username
     const navigate = useNavigate();                                     //for navigation                   
     const [loading, setLoading] = React.useState<boolean>(true);        //for loading spinner
+    const [err, setErr] = React.useState<boolean>(false);           //for error message
     const [CRTAnswers, setCRTAnswers] = useState<string[]>([]);
     const [DLAnswers, setDLAnswers] = useState<string[]>([]);
     const [MRAnswers, setMRAnswers] = useState<string[]>([]);
@@ -25,31 +26,46 @@ const Profile: React.FC = () => {
 
     
 
-    const userId = user._id;
+    const user_id = user._id;
     const fetchAnswers = async() => {
-        const response = await axios.post(`http://localhost:8000/user/userAnswer`, {userId});
-        if (response.data) {
-            setCRTAnswers(response.data.crt.answers);
-            setDLAnswers(response.data.dl.answers);
-            setMRAnswers(response.data.mr.answers);
-            setCRTScore(response.data.score1)
-            setDLScore(response.data.score2)
-            setMRScore(response.data.score3)
+        try {
+            const response = await axios.post(`http://localhost:8000/user/userAnswer`, {user_id});
+            if (response.data) {
+                setCRTAnswers(response.data.crt.answers);
+                setDLAnswers(response.data.dl.answers);
+                setMRAnswers(response.data.mr.answers);
+                setCRTScore(response.data.score1)
+                setDLScore(response.data.score2)
+                setMRScore(response.data.score3)
+            }
+        } catch (error) {
+            console.log(error);
+            setErr(true);
+        } finally {
+            setLoading(false);
         }
     }
 
     const fetchStances = async () => {
-        const response1 = await axios.post(`http://localhost:8000/question/get`, {section: user.stance1});
-        if(response1.data){
-            setStance1(response1.data.questions)
-        }
-        const response2 = await axios.post(`http://localhost:8000/question/get`, {section: user.stance2});
-        if(response2.data){
-            setStance2(response2.data.questions)
-        }
+        try {
+            setLoading(true);
+            const response1 = await axios.post(`http://localhost:8000/question/get`, {section: user.stance1});
+            if(response1.data){
+                setStance1(response1.data.questions)
+            }
+            const response2 = await axios.post(`http://localhost:8000/question/get`, {section: user.stance2});
+            if(response2.data){
+                setStance2(response2.data.questions)
+            }
 
-        console.log(response1.data);
-        console.log(response2.data);
+            console.log(response1.data);
+            console.log(response2.data);
+        } catch (error) {
+            console.log(error);
+            setErr(true);   
+        } finally {
+            setLoading(false);
+        }
     }
     
 
@@ -73,46 +89,51 @@ const Profile: React.FC = () => {
                         <p> stance 2: {user.stance2 }</p>
                     </div>
                 </div>
+                    {loading ? (
+                        <p>Loading...</p>
+                    ) : err ? (
+                        <p>Complete the missing sections of the form to see results</p>
+                    ) : (
+                        <>
+                            <h3>User Answers: </h3>
+                            <div className="profile_auction-list"> 
+                            <p> CRT: </p>
+                            <ul>
+                                {CRTAnswers.map((answer, index) => (
+                                    <li key={index}>{answer}</li>
+                                ))}
+                            </ul>
+                            </div>
+                            <div className="profile_auction_list">
+                            <p style={{ fontWeight: "bold" }}> Score: {CRTScore}</p>
+                            </div>
 
-                
-                <h3>User Answers: </h3>
-                <div className="profile_auction-list"> 
-                <p> CRT: </p>
-                <ul>
-                    {CRTAnswers.map((answer, index) => (
-                        <li key={index}>{answer}</li>
-                    ))}
-                </ul>
-                </div>
-                <div className="profile_auction_list">
-                <p style={{ fontWeight: "bold" }}> Score: {CRTScore}</p>
-                </div>
+                            <div className="profile_auction-list"> 
+                            <p> DL: </p>
+                            <ul>
+                                {DLAnswers.map((answer, index) => (
+                                    <li key={index}>{answer}</li>
+                                ))}
+                            </ul>
+                            </div>
+                            <div className="profile_auction_list">
+                            <p style={{ fontWeight: "bold" }}> Score: {DLScore}</p>
+                            </div>
 
-                <div className="profile_auction-list"> 
-                <p> DL: </p>
-                <ul>
-                    {DLAnswers.map((answer, index) => (
-                        <li key={index}>{answer}</li>
-                    ))}
-                </ul>
-                </div>
-                <div className="profile_auction_list">
-                <p style={{ fontWeight: "bold" }}> Score: {DLScore}</p>
-                </div>
+                            <div className="profile_auction-list"> 
+                            <p> MR: </p>
+                            <ul>
+                                {MRAnswers.map((answer, index) => (
+                                    <li key={index}>{answer}</li>
+                                ))}
+                            </ul>
+                            </div>
 
-                <div className="profile_auction-list"> 
-                <p> MR: </p>
-                <ul>
-                    {MRAnswers.map((answer, index) => (
-                        <li key={index}>{answer}</li>
-                    ))}
-                </ul>
-                
-                </div>
-
-                <div className="profile_auction_list">
-                <p style={{ fontWeight: "bold" }}> Score: {MRScore}</p>
-                </div>
+                            <div className="profile_auction_list">
+                            <p style={{ fontWeight: "bold" }}> Score: {MRScore}</p>
+                            </div>
+                        </>
+                    )}
             </div>
         </body>
     );

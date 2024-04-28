@@ -1,6 +1,7 @@
 import { User } from "../models/user.js";
 import { Answer } from "../models/answers.js";
 
+
 function generateNumbers(min, max) {
     let num1 = Math.floor(Math.random() * (max - min + 1)) + min;
     
@@ -12,13 +13,13 @@ function generateNumbers(min, max) {
     return [num1, num2];
 }
 
-//simple setter
+//add a responder to the database
 export const setUser = async (req, res) => {                    
     const { name, age, gender, status} = req.body;
-    console.log(req.body)
+    // console.log(req.body)
     try {
         const user = await User.findOne ({ name });
-        console.log(user);
+        // console.log(user);
 
         if (user && user.name === name && user.age === parseInt(age)) {
             console.log("User with same name and age already exists");
@@ -36,7 +37,7 @@ export const setUser = async (req, res) => {
         const stance2 = numToString[num2]
 
         const newUser = await User.create({ name, age, gender,status,stance1:stance1, stance2:stance2});
-        console.log(newUser);
+        // console.log(newUser);
         console.log("user created: " + newUser.name);
         return res.status(201).json(newUser);
     }
@@ -82,54 +83,70 @@ export const authenticateUser = async (req, res) => {
     }
 }
 
-// get user's answer data
+//grade the user's answers
 export const userAnswer = async (req, res)=> {
-    const {userId} = req.body;
-    // console.log(req.body);
-    //sequence of data: 
-    // Gender, Age, Status, crtScore, dlScore, MR, Stance, Rating
-
-    const user = await User.findById(userId);
-    // console.log(user);
+    const {user_id} = req.body;
+    const user = await User.findById(user_id);
+    
     if(!user){
         console.log("User not found!");
         return res.status(404)
     }
 
-    const CRT = await Answer.findOne({user_id: userId, section: 1})
+    const CRT = await Answer.findOne({user_id: user_id, section: 1})
     if(!CRT){
         console.log("CRT record not found for this user!")
         return res.status(404)
     }
-    // calculate CRT score
-    let crtScore = 0;
-    if(CRT.answers[0] === "First"){crtScore++;}
-    if(CRT.answers[1] === "8"){crtScore++;}
-    if(CRT.answers[2] === "Emily"){crtScore++;} 
-    if(CRT.answers[3] === "5 Minutes"){crtScore++;}
-    if(CRT.answers[4] === "47 Days"){crtScore++;}
 
-    const DL = await Answer.findOne({user_id: userId, section: 2})
+    let crtScore = 0;
+    try{
+        if(CRT.answers[0] === "Second"){crtScore++;}
+        if(CRT.answers[1] === "8"){crtScore++;}
+        if(CRT.answers[2] === "Emily"){crtScore++;} 
+        if(CRT.answers[3] === "5 Minutes"){crtScore++;}
+        if(CRT.answers[4] === "47 Days"){crtScore++;}
+    }catch(e){
+        console.log("Error in calculating CRT score: ", e);
+        return res.status(500).json({error: "Error in calculating CRT score"});
+    }
+    const DL = await Answer.findOne({user_id: user_id, section: 2})
     if(!DL){
         console.log("DL record not found for this user!")
     }
     let dlScore = 0;
-    if(DL.answers[0]==="I was able to connect"){dlScore++}
-    if(DL.answers[1]==="I was able to open my mobile browser"){dlScore++}
-    if(DL.answers[2]!=="I was unable to lookup"){dlScore++} 
-    if(DL.answers[3]==="I was able to open a new tab in the browser"){dlScore++}
-    if(DL.answers[4]!=="I was unable to perform this task"){dlScore++}
-    if(DL.answers[5]==="I was able to bookmark a webpage"){dlScore++}
-    if(DL.answers[6]==="I was able to clear all cache and cookies from my browser"){dlScore++}
+    try{
+        if(DL.answers[0]==="I was able to connect"){dlScore++}
+        console.log("1: "+dlScore)
+        if(DL.answers[1]==="I was able to open my mobile browser"){dlScore++}
+        console.log("2: "+dlScore)
+        if(DL.answers[2]==="Karachi"){dlScore++}
+        console.log("3: "+dlScore) 
+        if(DL.answers[4]==="I was able to open a new tab in the browser"){dlScore++}
+        console.log("4: "+dlScore, DL.answers[4])
+        if(DL.answers[3]!=="I was unable to perform this task"){dlScore++}
+        console.log("5: "+dlScore)
+        if(DL.answers[5]==="I was able to bookmark a webpage"){dlScore++}
+        console.log("6: "+dlScore)
+        if(DL.answers[6]==="I was able to clear all cache and cookies from my browser"){dlScore++}
+        console.log("7: "+dlScore)
+    } catch(e){
+        console.log("Error in calculating DL score: ", e);
+        return res.status(500).json({error: "Error in calculating DL score"});
+    }
 
-
-    const MR = await Answer.findOne({user_id: userId, section:3})
+    const MR = await Answer.findOne({user_id: user_id, section:3})
     let mrScore = 0;
-    if(MR.answers[0]==="yes"){mrScore++}
-    if(MR.answers[1]==="old"){mrScore++}
-    if(MR.answers[2]==="valuable"){mrScore++}
-    if(MR.answers[3]==="valid"){mrScore++}
-    if(MR.answers[4]==="yes"){mrScore++}
+    try{
+        if(MR.answers[0]==="yes"){mrScore++}
+        if(MR.answers[1]==="old"){mrScore++}
+        if(MR.answers[2]==="valuable"){mrScore++}
+        if(MR.answers[3]==="valid"){mrScore++}
+        if(MR.answers[4]==="yes"){mrScore++}
+    } catch(e){
+        console.log("Error in calculating MR score: ", e);
+        return res.status(500).json({error: "Error in calculating MR score"});
+    }
 
     // const answer = {
     //     gender: user.gender,
@@ -141,9 +158,12 @@ export const userAnswer = async (req, res)=> {
     //     stance: stance,
     //     rating: rating,
     // }
-
-    return res.status(200).json({crt:CRT,score1:crtScore, dl:DL,score2:dlScore, mr:MR, score3: mrScore })
-
+    try{
+        return res.status(200).json({crt:CRT,score1:crtScore, dl:DL,score2:dlScore, mr:MR, score3: mrScore })
+    }
+    catch(e){
+        console.log("Error in sending answers: ", e);
+        return res.status(500).json({error: "Error in sending answers"});
+    }
     // need to run selenium code here to use 'answer' and generate gpt's response.
-
 } 

@@ -2,6 +2,7 @@ import { Question } from "../models/question.js";
 import { Answer } from "../models/answers.js";
 
 
+//add a question to the database
 export const addQuestion = async (req, res) => {
     const { section, statement, options, type } = req.body;
     const question = new Question({ section, statement, options, type });
@@ -14,9 +15,10 @@ export const addQuestion = async (req, res) => {
     }
 }
 
+//get questions for a section to display
 export const getQuestion = async (req, res) => {
     const { section } = req.body;
-    console.log(req.body);
+    // console.log(req.body);
     try {
         console.log("Finding questions for section: "+section);
         const questions = await Question.find({ section });

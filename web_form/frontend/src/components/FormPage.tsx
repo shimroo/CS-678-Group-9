@@ -4,13 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from "../hooks/useAuth";
 import Navbar from './Navbar';
 import '../styles/FormPage.css';
+import { get } from "http";
 
 interface Question {
   _id: string;
   section: string;
   statement: string;
   options: string[];
-  type:string;
+  type:string;    // 0 for radio, 1 for text, 2 for 'others' text
 }
 
 const QuestionPage: React.FC<{ section: string }> = ({ section }) => {
@@ -20,6 +21,7 @@ const QuestionPage: React.FC<{ section: string }> = ({ section }) => {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [answers, setAnswers] = useState<string[]>([]);
   const [additionalFields, setAdditionalFields] = useState(0);
+  const [listBool, setListBool] = useState(false);
 
   useEffect(() => {
     // Fetch questions for the specified section from the backend
@@ -36,6 +38,38 @@ const QuestionPage: React.FC<{ section: string }> = ({ section }) => {
       }
     };
 
+    const fetchStance = async ( stance_id: string) => {
+      try {
+        const response = await axios.post(`http://localhost:8000/question/get`, { section : stance_id });
+        setQuestions(response.data);
+        // Initialize answers array with empty strings for each question
+        setAnswers(new Array(response.data.length).fill(""));
+      } catch (error) {
+        console.error("Error fetching questions:", error);
+      }
+    };
+
+    const getStanceNumber = async (stance_id: string) => {
+      try {
+        const response = await axios.post(`http://localhost:8000/user/get`, { id: user._id });
+        if (response.status === 200) {
+          if (stance_id === "1") {
+            fetchStance(response.data.stance1);
+          } else if (stance_id === "2") {
+            fetchStance(response.data.stance2);
+          }
+        } else {
+          console.log("Counld not fetch stance");
+        }
+      } catch (error) {
+        console.error("Error fetching stance", error);
+      }
+    }
+        
+
+
+    
+
     const getSection = async () => {
       try {
         const response = await axios.post(`http://localhost:8000/answer/get`, { user_id: user._id, section });
@@ -44,16 +78,48 @@ const QuestionPage: React.FC<{ section: string }> = ({ section }) => {
           handleSubmit();
         } else {
           console.log("Section not completed yet");
-          fetchQuestions();
+          if (section === "9") {
+            getStanceNumber("1");
+          } else if (section === "10") {
+            getStanceNumber("2");
+          } else {
+            fetchQuestions();
+          }
         }
-        // fetchQuestions();
+
       } catch (error) {
         console.error("Error fetching section:", error);
       }
     }
+
+    const getList = async () => {
+      try {
+        const response = await axios.post(`http://localhost:8000/answer/list`, { user_id: user._id});
+        if (response.status === 200) {
+          setListBool(true);
+          console.log("list is to be filled");
+        } else {
+          console.log("list is not to be filled");
+        }
+      } catch (error) {
+        console.error("Error fetching questions:", error);
+      }
+    }
     
     getSection();
+    // getList();
+
+    //if section 8 and listbool is false, navigate to section 9
+    if (section === "8" ) {
+      getList();
+      if (!listBool){ 
+        navigate(`/section9`);
+      }
+    }
+
   }, [section, user]);
+
+ 
 
   const handleAnswerChange = (index: number, option: string) => {
     const newAnswers = [...answers];
@@ -89,17 +155,17 @@ const QuestionPage: React.FC<{ section: string }> = ({ section }) => {
 
     if (section === "4") {
       switch (answers[0]) {
-        case "PMLN":
-          nextSection = 6;
-          break;
         case "PTI":
           nextSection = 5;
+          break;
+        case "PMLN":
+          nextSection = 6;
           break;
         case "PPP":
           nextSection = 7;
           break;
         default:
-          nextSection = 9;
+          nextSection = 8;
           break;
       }
     }
@@ -113,7 +179,7 @@ const QuestionPage: React.FC<{ section: string }> = ({ section }) => {
       <div className="question-container">
         <h2>Section: {section}</h2>
         <form onSubmit={handleAnswerSubmit}>
-          {questions.map((question, index) => (
+          {/* {questions.map((question, index) => (
             <fieldset className="question" key={question._id}>
               <p>{question.statement}</p>
               {question.type === "0" ? (
@@ -151,7 +217,55 @@ const QuestionPage: React.FC<{ section: string }> = ({ section }) => {
                 </>
               )}
             </fieldset>
-          ))}
+          ))} */}
+          {questions.map((question, index) => (
+          <fieldset className="question" key={question._id}>
+            <p>{question.statement}</p>
+            {question.type === "0" ? (
+              question.options.map((option, optionIndex) => (
+                <div className="radio-option" key={optionIndex}>
+                  <input
+                    type="radio"
+                    id={`question-${index}-${optionIndex}`}
+                    name={`question-${index}`}
+                    value={option}
+                    checked={answers[index] === option}
+                    onChange={(e) => handleAnswerChange(index, e.target.value)}
+                  />
+                  <label htmlFor={`question-${index}-${optionIndex}`}>{option}</label>
+                </div>
+              ))
+            ) : question.type === "1" ? (
+              <input
+                type="text"
+                id={`question-${index}`}
+                name={`question-${index}`}
+                value={answers[index] || ''}
+                onChange={(e) => handleAnswerChange(index, e.target.value)}
+                className="text-input"
+              />
+            ) : (
+              <div>
+                <input
+                  list={`options-${index}`}
+                  type="text"
+                  id={`question-${index}`}
+                  name={`question-${index}`}
+                  value={answers[index] || ''}
+                  onChange={(e) => handleAnswerChange(index, e.target.value)}
+                  className="text-input"
+                />
+                <datalist id={`options-${index}`}>
+                  {question.options.map((option, optionIndex) => (
+                    <option key={optionIndex} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </datalist>
+              </div>
+            )}
+          </fieldset>
+        ))}
           <button type="submit" className="question-submit">Submit</button>
         </form>
       </div>
