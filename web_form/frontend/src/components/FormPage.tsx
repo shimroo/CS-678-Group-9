@@ -148,14 +148,6 @@ const QuestionPage: React.FC<{ section: string }> = ({ section }) => {
 
   const handleSubmit = async () => {
     let nextSection = parseInt(section) + 1;   
-    
-    if (section === "5" || section === "6" || section === "7") {
-      if (listBool) {
-        nextSection = 8;
-      } else {
-        nextSection = 9;
-      }
-    }
 
     if (section === "4") {
       switch (answers[0]) {

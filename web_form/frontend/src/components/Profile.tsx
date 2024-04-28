@@ -104,7 +104,7 @@ const Profile: React.FC = () => {
                             </ul>
                             </div>
                             <div className="profile_auction_list">
-                            <p style={{ fontWeight: "bold" }}> Score: {CRTScore}</p>
+                            <p style={{ fontWeight: "bold" }}> Score: {CRTScore}/5</p>
                             </div>
 
                             <div className="profile_auction-list"> 
@@ -116,7 +116,7 @@ const Profile: React.FC = () => {
                             </ul>
                             </div>
                             <div className="profile_auction_list">
-                            <p style={{ fontWeight: "bold" }}> Score: {DLScore}</p>
+                            <p style={{ fontWeight: "bold" }}> Score: {DLScore}/7</p>
                             </div>
 
                             <div className="profile_auction-list"> 
@@ -129,7 +129,7 @@ const Profile: React.FC = () => {
                             </div>
 
                             <div className="profile_auction_list">
-                            <p style={{ fontWeight: "bold" }}> Score: {MRScore}</p>
+                            <p style={{ fontWeight: "bold" }}> Score: {MRScore}/5</p>
                             </div>
                         </>
                     )}
