@@ -42,10 +42,11 @@ function App() {
         <Route path="/section8" element={<QuestionPage section="8"/>}/>
         <Route path="/section9" element={<QuestionPage section="9"/>}/>
         <Route path="/section10" element={<QuestionPage section="10"/>}/>
-        <Route path="/section11" element={<QuestionPage section="11"/>}/> 
-        <Route path="/section12" element={<QuestionPage section="12"/>}/>
+        <Route path="/section11" element={<Home/>}/> 
+        {/* <Route path="/section11" element={<QuestionPage section="11"/>}/>  */}
+        {/* <Route path="/section12" element={<QuestionPage section="12"/>}/>
         <Route path="/section13" element={<QuestionPage section="13"/>}/>
-        <Route path="/section14" element={<QuestionPage section="14"/>}/>
+        <Route path="/section14" element={<QuestionPage section="14"/>}/> */}
       </Routes>
     </BrowserRouter>
   );

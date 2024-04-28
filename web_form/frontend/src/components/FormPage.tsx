@@ -149,7 +149,7 @@ const QuestionPage: React.FC<{ section: string }> = ({ section }) => {
   const handleSubmit = async () => {
     let nextSection = parseInt(section) + 1;   
 
-    if (section === "10") {
+    if (section === "11") {
       navigate(`/inter`);
     }
 
