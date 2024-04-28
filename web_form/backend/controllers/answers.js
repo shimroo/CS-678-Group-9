@@ -56,3 +56,22 @@ export const getlist = async (req, res) => {
         res.status(404).json({ message: error.message });
     }
 }
+
+
+export const getActualAnswers = async (req, res) => {
+    const { user_id, section } = req.body;
+    console.log("Finding actual answers for section: "+section);
+    try {
+        const answers = await Answer.findOne({ user_id, section });
+        if (answers === null) {
+            console.log("No answers found for section: "+section);
+            res.status(202).json({ message: "No answers found for section: "+section });
+            return;
+        }
+        console.log("Answers found for section: "+section);
+        return res.status(200).json(answers);
+
+    } catch (error) {
+        return res.status(404).json({ message: error.message });
+    }
+}   

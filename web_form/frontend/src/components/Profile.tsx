@@ -11,6 +11,7 @@ const Profile: React.FC = () => {
 
     const { user } = useAuthContext();                                  //for user authentication
     const username = user?.username;                                     //for username
+    const user_id = user._id;
     const navigate = useNavigate();                                     //for navigation                   
     const [loading, setLoading] = React.useState<boolean>(true);        //for loading spinner
     const [err, setErr] = React.useState<boolean>(false);           //for error message
@@ -20,13 +21,36 @@ const Profile: React.FC = () => {
     const [CRTScore, setCRTScore] = useState('');
     const [DLScore, setDLScore] = useState('');
     const [MRScore, setMRScore] = useState('');
+    const [type, setType] = useState('');
     const [stance1, setStance1] = useState('');
     const [stance2, setStance2] = useState('');
+    const [rate1, setRate1] = useState('');
+    const [rate2, setRate2] = useState('');
 
 
-    
+    const updateDB = async () => {
+        try {
+            const response = await axios.post('http://localhost:8000/user/update', {
+                user_id,
+                crt: CRTScore,
+                dl: DLScore,
+                mr: MRScore,
+                type: type,
+                rate1: rate1,
+                rate2: rate2,
 
-    const user_id = user._id;
+            });
+            if (response.status === 200) {
+                console.log("Data updated successfully");
+            } else {
+                console.log("Data not updated");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+
     const fetchAnswers = async() => {
         try {
             const response = await axios.post(`http://localhost:8000/user/userAnswer`, {user_id});
@@ -51,10 +75,12 @@ const Profile: React.FC = () => {
             const response1 = await axios.post(`http://localhost:8000/question/get`, {section: user.stance1});
             if(response1.data){
                 setStance1(response1.data.questions)
+                fetchStancesAnswers(stance1);
             }
             const response2 = await axios.post(`http://localhost:8000/question/get`, {section: user.stance2});
             if(response2.data){
                 setStance2(response2.data.questions)
+                fetchStancesAnswers(stance2);
             }
 
             console.log(response1.data);
@@ -67,6 +93,19 @@ const Profile: React.FC = () => {
         }
     }
     
+    const fetchStancesAnswers = async (stance_no: any) => {
+        try {
+            const response = await axios.post(`http://localhost:8000/answer/getActual`, { user_id, section: stance_no });
+            if (response.data) {
+                console.log(response.data);
+            }
+        } catch (error) {
+            console.log(error);
+            setErr(true);
+        } finally {
+            setLoading(false);
+        }
+    }
 
     useEffect(() => {
         fetchAnswers();
@@ -129,6 +168,10 @@ const Profile: React.FC = () => {
 
                             <div className="profile_auction_list">
                             <p style={{ fontWeight: "bold" }}> Score: {MRScore}/5</p>
+                            </div>
+                            <div className="profile_auction_list">
+                                <p onClick={updateDB}> Only Admin</p>
+                                <p onClick={() => navigate('/inter')}> Inter</p>
                             </div>
                         </>
                     )}

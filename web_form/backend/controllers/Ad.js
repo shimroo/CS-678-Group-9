@@ -2,37 +2,66 @@ import { Ad } from "../models/Ad.js";
 import { User } from "../models/user.js";
 
 
+
+//simple setter
+export const setAd = async (req, res) => {                  
+    const { prompt, content, stance, type, user_id } = req.body;
+
+    try {
+        console.log("Creating Ad");
+        const ad = await Ad.findOne({ user_id, stance });
+        if (ad) {
+            console.log("Ad already exists, returning existing ad");
+            return res.status(202).json(ad);
+        }
+
+        const new_ad = await Ad.create({ prompt, content, stance, type, user_id });
+        console.log("new Ad created");
+        return res.status(200).json(new_ad);
+    }
+    catch (error) {
+        console.log("Error creating Ad: " + error);
+        return res.status(500).json({ error: error });
+    }
+}
+
+
 //simple getter
 export const getAd = async (req, res) => {
-    const { id } = req.body;
+    const { user_id, stance } = req.body;
+
     try {
-        console.log("Finding Ad");
-        const ad = await Ad.findById(id);
+        console.log("Getting Ad");
+        const ad = await Ad.findOne({ user_id, stance });
         if (!ad) {
             console.log("Ad not found");
-            return res.status(500).json({ error: "Ad does not exist" });
+            return res.status(404).json({ error: "Ad not found" });
         }
-        console.log("Sending Ad: " + ad.prompt);
+        console.log("Ad found");
         return res.status(200).json(ad);
-    }
-    catch (error) {
-        return res.status(500).json({ error: error.message });
+    } catch (error) {
+        console.log("Error getting Ad: " + error);
+        return res.status(500).json({ error: error });
     }
 }
 
-//simple getter
-export const setAd = async (req, res) => {                  
-    const { prompt, content, user_id } = req.body;
+
+//save ad
+export const saveAd = async (req, res) => {
+    const { user_id, stance, content } = req.body;
+
     try {
-        
-        const newAd = await Ad.create({ prompt, content, user_id });
-        console.log("Ad added to DB: " + newAd.prompt);
-
-        return res.status(200).json(new_auction);
-    }
-    catch (error) {
-        console.log("Ad not created");
-        return res.status(500).json({ error: error.message });
+        const ad = await Ad.findOne({ user_id, stance });
+        if (ad.content !== "") {
+            console.log("Ad content is not empty saving failed");
+            return res.status(400).json({ error: "Ad content is empty, cannot save" });
+        }
+        ad.content = content;
+        ad.save();
+        console.log("Ad saved");
+        return res.status(200).json(ad);
+    } catch (error) {
+        console.log("Error saving Ad: " + error);
+        return res.status(500).json({ error: error });
     }
 }
-

@@ -1,6 +1,7 @@
 import { User } from "../models/user.js";
 import { Answer } from "../models/answers.js";
-import { Question, FewShot } from "../models/question.js";
+import { Question } from "../models/question.js";
+import { FewShot } from "../models/fewshot.js";
 
 function generateNumbers(min, max) {
     let num1 = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -117,19 +118,13 @@ export const userAnswer = async (req, res)=> {
     let dlScore = 0;
     try{
         if(DL.answers[0]==="I was able to connect"){dlScore++}
-        console.log("1: "+dlScore)
         if(DL.answers[1]==="I was able to open my mobile browser"){dlScore++}
-        console.log("2: "+dlScore)
         if(DL.answers[2]==="Karachi"){dlScore++}
-        console.log("3: "+dlScore) 
         if(DL.answers[4]==="I was able to open a new tab in the browser"){dlScore++}
-        console.log("4: "+dlScore, DL.answers[4])
         if(DL.answers[3]!=="I was unable to perform this task"){dlScore++}
-        console.log("5: "+dlScore)
         if(DL.answers[5]==="I was able to bookmark a webpage"){dlScore++}
-        console.log("6: "+dlScore)
         if(DL.answers[6]==="I was able to clear all cache and cookies from my browser"){dlScore++}
-        console.log("7: "+dlScore)
+
     } catch(e){
         console.log("Error in calculating DL score: ", e);
         return res.status(500).json({error: "Error in calculating DL score"});
@@ -166,21 +161,19 @@ export const userAnswer = async (req, res)=> {
     if(MR8){
         if (MR8.answers[0] === '' || MR8.answers[1] === '' || MR8.answers[2] === ''){
             console.log("list answers are empty")
-            
+            mrScore++            
         } else {
             console.log("list answers are complete")
-            mrScore++
         }
     }
 
-    console.log(MR.answers)
+    // console.log(MR.answers)
     try{
         //answers[0] is selected party no scoring applicable
-        if(MR.answers[1]==="PMLN"){mrScore++}
-        if(MR.answers[2]!=="Newly formed party with Initial leaders"){mrScore++}
-        if(MR.answers[3]==="Valuable" || MR.answers[3] ==="Admirable"){mrScore++}
-        if(MR.answers[4]==="Valid"){mrScore++}
-        if(MR.answers[5]==="yes"){mrScore++}
+        if(MR.answers[1]!=="PMLN"){mrScore++}
+        if(MR.answers[2]==="Newly formed party with Initial leaders"){mrScore++}
+        if(MR.answers[3]!=="Valuable" && MR.answers[3] !=="Admirable"){mrScore++}
+        if(MR.answers[4]!=="Valid"){mrScore++}
     } catch(e){
         console.log("Error in calculating MR score: ", e);
         return res.status(500).json({error: "Error in calculating MR score"});
@@ -401,3 +394,43 @@ export const userAnswer = async (req, res)=> {
 //     // need to run selenium code here to use 'answer' and generate gpt's response.
 
 // }
+
+export const updateUser = async (req, res) => {
+    const { user_id, crt, dl, mr, type, rate1, rate2 } = req.body;
+    const user = await User.findById(user_id);
+
+    console.log("Updating user: ", user_id);
+    if(!user){
+        console.log("User not found!");
+        return res.status(500).json({error: "User not found!"});
+    } 
+
+    user.crt = crt;
+    user.dl = dl;
+    user.mr = mr;
+    user.type = type;
+    user.rate1 = rate1;
+    user.rate2 = rate2;
+
+    try{
+        await user.save();
+        console.log("User updated successfully!");
+        return res.status(200).json({message: "User updated successfully!"});
+    } catch(e){
+        console.log("Error in updating user: ", e);
+        return res.status(500).json({error: "Error in updating user"});
+    }
+}
+
+
+export const getInter = async (req, res) => {
+    const { user_id } = req.body;
+    const user = await User.findById(user_id);
+    if(!user){
+        console.log("User not found!");
+        return res.status(500).json({error: "User not found!"});
+    }
+    console.log("sending data for inter")
+
+    return res.status(200).json({user:user});
+}

@@ -149,6 +149,14 @@ const QuestionPage: React.FC<{ section: string }> = ({ section }) => {
   const handleSubmit = async () => {
     let nextSection = parseInt(section) + 1;   
 
+    if (section === "10") {
+      navigate(`/inter`);
+    }
+
+    if (section === "5" || section === "6" || section === "7") {
+      nextSection = 8;
+    }
+
     if (section === "4") {
       switch (answers[0]) {
         case "PTI":
