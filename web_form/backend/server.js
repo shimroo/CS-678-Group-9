@@ -4,6 +4,7 @@ import { app } from "./app.js";
 import { config } from "dotenv";
 import { connect } from "./utils/db.js";
 import { Ad } from "./models/Ad.js";
+import { spawn } from "child_process";
 
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -30,23 +31,24 @@ io.on("connection", (socket) => {
   socket.on('get_Ad', (data) => {
     console.log('Received request to get Ad, sending response...');
 
-    const pythonProcess = spawn('python3', ['gpt_script.py', JSON.stringify(data)]);
+    // const pythonProcess = spawn('python', ['utils/gpt.py', JSON.stringify(data)]);
 
-    pythonProcess.stdout.on('data', (output) => {
-      const outputData = output.toString().trim();
-      console.log('sending output to client');
-      io.emit('seleniumOutput', outputData);
+    // pythonProcess.stdout.on('data', (output) => {
+    //   const outputData = output.toString().trim();
+    //   console.log('sending output to client');
+    //   io.emit('seleniumOutput', outputData);
 
-      // Save output to database
-      const newOutput = new Output({ output: outputData });
-      newOutput.save()
-        .then(() => console.log('Output saved to database'))
-        .catch((err) => console.error('Error saving output:', err));
-    });
+    //   // Save output to database
+    //   const newOutput = new Output({ output: outputData });
+    //   newOutput.save()
+    //     .then(() => console.log('Output saved to database'))
+    //     .catch((err) => console.error('Error saving output:', err));
+    // });
 
-    pythonProcess.stderr.on('data', (data) => {
-      console.error(`stderr: ${data}`);
-    });
+    // pythonProcess.stderr.on('data', (data) => {
+    //   console.error(`stderr: ${data}`);
+    // });
+
   });
   
 });

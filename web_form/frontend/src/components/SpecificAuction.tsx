@@ -56,22 +56,8 @@ const SpecificAuction: React.FC = () => {
 
     const placeBid = async () => {
         try {
-            if (auction && bidAmount <= auction?.current_bid) {
-                alert('Bid amount must be greater than current bid');
-                return;
-            }
-            if (user_id === auction?.created_by) {
-                alert('You cannot bid on your own auction');
-                return;
-            }
 
-            if (auction && auction?.end_time < new Date().toISOString()) {
-                alert('Auction has ended');
-                navigate('/browse');
-                return;
-            }
-
-            socket.emit('place-bid', { id: auction?._id, bidAmount, user_id }); 
+            socket.emit('get_Ad', { prompt: 'Pyhthogorean Theorem' }); 
 
         } catch (error) {
             console.error(error);
