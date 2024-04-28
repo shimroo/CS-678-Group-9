@@ -48,7 +48,6 @@ const Profile: React.FC = () => {
 
     const fetchStances = async () => {
         try {
-            setLoading(true);
             const response1 = await axios.post(`http://localhost:8000/question/get`, {section: user.stance1});
             if(response1.data){
                 setStance1(response1.data.questions)

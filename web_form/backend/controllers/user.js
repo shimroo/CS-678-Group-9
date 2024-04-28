@@ -90,13 +90,13 @@ export const userAnswer = async (req, res)=> {
     
     if(!user){
         console.log("User not found!");
-        return res.status(404)
+        return res.status(500).json({error: "User not found!"});
     }
 
     const CRT = await Answer.findOne({user_id: user_id, section: 1})
     if(!CRT){
         console.log("CRT record not found for this user!")
-        return res.status(404)
+        return res.status(500).json({error: "CRT record not found for this user!"});
     }
     // calculate CRT score
     let crtScore = 0;
