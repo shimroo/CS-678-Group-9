@@ -8,7 +8,8 @@ const userSchema = new mongoose.Schema({
     stance1 : { type: String, required: true },
     stance2 : { type: String, required: true },
     rate1 : { type: String },
-    rate2 : { type: String}
+    rate2 : { type: String},
+    type: {type: String, required: true, default: '1'},
 });
 
 export const User = mongoose.model('User', userSchema);

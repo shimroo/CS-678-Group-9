@@ -68,7 +68,6 @@ const Profile: React.FC = () => {
     }
     
 
-
     useEffect(() => {
         fetchAnswers();
         fetchStances();
