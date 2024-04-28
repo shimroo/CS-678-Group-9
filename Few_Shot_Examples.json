@@ -1,0 +1,55 @@
+[
+    {
+        "stance": "a",
+        "few_shot_pro": ["Throughout its history, Pakistans defense budget has taken a huge portion of its yearly budget at ~ 19%, while it only employs > 2% of the labor force. This disproportionate spending could be utilized for greater good for a larger chunk of Pakistanis through improved education and healthcare.",
+        "Pakistan spends only around 1.7% of its GDP on education, which is low compared to the global average of approximately 4.8%. Similarly, healthcare expenditure is around 1.2% of GDP, significantly lower than the South Asian average of about 3.6%." ,
+        "The current state of public healthcare and education in Pakistan is a cause for concern, evident in global rankings such as 122nd out of 190 by the World Health Organization's performance report and a similarly distressing 151st out of 191 by the United Nations Education Index. These rankings underscore the significant challenges faced by ordinary Pakistanis in accessing basic human development needs. While the affluent segment of society can afford private healthcare and education options, the majority of Pakistanis are deprived of such privileges. This disparity underscores the urgent need for systemic reforms to ensure equitable access to essential services for all citizens, regardless of their socioeconomic status."],
+        "few_shot_con": [" Consider Muslim/Middle eastern countries, including Palestine, Syria, Yemen etc with weak armies, how education and healthcare is affected and rendered near useless because of on-going wars and the inability to defend the nation.",
+        "Lack of an upholding army can lead to rise of guerilla factions and hence, cause civil wars within these factions when supported by different world powers. Give an example of the Assad regime in Syria and how they are opposed by factions supported by the U.S, Saudi etc, while Iran and Russia support the Assad regime, overall causing more turmoil in the region.",
+        "Give a historical context of the attacks and turmoil carried out by enemy nations such as India, or terrorist organizations against innocent Pakistani, and the loss of 80,000 plus Pakistani lives in the war of terror. Making it imperative that percent of GDP spent on defense budget is  matched to India to better equip and defend the nation on its own. Needed to ensure sovereignty of the nation given the turbulent nature of the regions security." ]
+    },
+    {
+        "stance": "b",
+        "few_shot_pro": ["Given the colonial roots within Pakistan, extensive use of English within the education and legal/ government system has had a negative impact on use of urdu. This makes Urdu a dying language, with it we lose our history and culture.",
+        "Lack of identity, given the history of the (now Pakistani side) of the Indian subcontinent has deep roots with urdu, with its arabic, persian, and turkish origins etc which also tie into the cultural dependencies and similarities across these cultures with urdu.",
+        "Use of language is directly linked with privileges, non-english speakers are left uncatered as they have a hard time navigating education and government facilities / documents written in a foreign language, which often requires formal education to be proficient in, something that is often out of reach of a major portion  of pakistanis."
+        ],
+        "few_shot_con": ["Lack of scientific resources in native language. Major Fields including quantum physics, or even more everyday used technologies like computers have little to no native scientific literature in Urdu",
+        "Lack of international work due to communication barriers and a contrast in culture (refer to how languages contribute to cultural appropriation as well). This steps backwards in the idea of a ‘global village’ and isolates Pakistan more with the lack of economic and cultural collaborations.",
+        "Within Pakistan, there are various native languages that need to be catered and more extensive use native languages in education would create stronger divides within sub regions.( Refer to the first languages of pakistanis often being punjabi, sindhi, pashto, balochi)"
+        ]
+    },
+    {
+        "stance": "c",
+        "few_shot_pro": ["International cost / barrel has consistently increased, and a weakened Pakistani rupee means less buying power for the whole country, something that is out of control of the government.",
+        "National Reserves are filled through taxations on petroleum projects, which form a high percentage of the tax collection and eventually uphold the country debt servicing and other functionalities",      
+        "Alternate modes of transport such as public transports / railways are consistently worked upon, and are better for the environment as well as cheaper for the general public."  
+        ],
+        "few_shot_con": ["Tax burden on a single use case, should broaden tax collection net through better legislated and effective",
+        "Propagating effects on food prices, transportation, industrial use, and electricity, leading to high inflation.",
+        "Seek alternate sources for oil sourcing / iran and russian blocks can bring down oil prices" 
+        ]
+    },
+    {
+        "stance": "d",
+        "few_shot_pro": ["Pakistan can serve Kashmiris best by initiating a dialogue process with India.  Achieving a degree of success and trust in other fields can lead the two states to eventually discuss resolution of the Kashmir issue.",
+        "Trade represents an area that can be separated from contentious bilateral political issues.It has the potential to engage and energize the public and private sectors of both countries.In February, Minister Sharma proposed a $300 billion power grid in South Asia that would enable the region to share in electricity. Currently, South Asia is the least integrated region in the world when it comes to power generation. A transnational power grid across South Asia would not only promote energy security in the region, but also result in substantial cost savings.",
+        "To foster economic progress and strengthen people-to-people ties, India and Pakistan can collaborate on developing transnational infrastructure in transportation, energy, and telecommunications. The  Kartarpur Corridor, which facilitated the pilgrimage of Indian devotees to a Sikh shrine in Pakistan, serves as a successful precedent and highlights potential opportunities"],
+        "few_shot_con": ["Fostering cooperation between India and Pakistan remains challenging, given their historical disputes, leadership mistrust, and nuclear arsenals, hindering collaboration on economic, environmental, and security fronts",
+        "Disputes between states over crucial water resources paired with mismanagement by government authorities have resulted in severe water scarcity.",
+        "Territorial disputes, most notably in Kashmir, remain a significant barrier to regional cooperation. Recent events, such as India’s unilateral revocation of Articles 370 and 35A to alter the constitutional status of Kashmir, have further strained bilateral relations, further hindering prospects for regional cooperation between India and Pakistan."
+        ]
+    },
+    {
+        "stance": "e",
+        "few_shot_pro": ["Ensuring mandatory voting will ensure that the public opinion is rightly projected and hence would be a true representation of a democracy.",
+        "Voting also serves educational and political awareness benefits to the masses, as partaking voters would be involved at a deeper level with the political environment around them.",
+        "Mandatory voting works towards more legitimate representation and hence political stability as it reduces the likelihood of contentious disputes over the legitimacy of the elected officials." 
+        ],
+        "few_shot_con": ["Freedom of expression is hampered as voters’ right to abstain is taken, which might be as", 
+        "Opponents of compulsory voting argue that it complicates the election process with the greater likelihood of blank, multiple and invalid voting.",
+        "If the government criminalized non-voting, critics say it would cost taxpayers an unthinkable amount of money to enforce the law. First, law enforcement would need to identify every non-voter. Then, they would have to track them down and ticket them. Finally, an agency would need to process the payments from the non-voters." 
+        ]
+    }
+]
+
