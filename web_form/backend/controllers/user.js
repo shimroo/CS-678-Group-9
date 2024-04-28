@@ -98,7 +98,7 @@ export const userAnswer = async (req, res)=> {
         console.log("CRT record not found for this user!")
         return res.status(404)
     }
-
+    // calculate CRT score
     let crtScore = 0;
     try{
         if(CRT.answers[0] === "Second"){crtScore++;}
@@ -135,14 +135,52 @@ export const userAnswer = async (req, res)=> {
         return res.status(500).json({error: "Error in calculating DL score"});
     }
 
-    const MR = await Answer.findOne({user_id: user_id, section:3})
+    //get answers from section 3, 4, 5, 6, 7 and concatenate them to get MR answers
+    const MR3 = await Answer.findOne({user_id: user_id, section: 3})
+    const MR4 = await Answer.findOne({user_id: user_id, section: 4})
+    const MR5 = await Answer.findOne({user_id: user_id, section: 5})
+    const MR6 = await Answer.findOne({user_id: user_id, section: 6})
+    const MR7 = await Answer.findOne({user_id: user_id, section: 7})
+    const MR8 = await Answer.findOne({user_id: user_id, section: 8})
+
+    //concat answers of all MRs if not null
+    let MR = {answers: []}
     let mrScore = 0;
+
+    if(MR4){
+        MR.answers = MR.answers.concat(MR4.answers)
+    }
+    if(MR3){
+        MR.answers = MR.answers.concat(MR3.answers)
+    }
+    if(MR5){
+        MR.answers = MR.answers.concat(MR5.answers)
+    }
+    if(MR6){
+        MR.answers = MR.answers.concat(MR6.answers)
+    }
+    if(MR7){
+        MR.answers = MR.answers.concat(MR7.answers)
+    }
+
+    if(MR8){
+        if (MR8.answers[0] === '' || MR8.answers[1] === '' || MR8.answers[2] === ''){
+            console.log("list answers are empty")
+            
+        } else {
+            console.log("list answers are complete")
+            mrScore++
+        }
+    }
+
+    console.log(MR.answers)
     try{
-        if(MR.answers[0]==="yes"){mrScore++}
-        if(MR.answers[1]==="old"){mrScore++}
-        if(MR.answers[2]==="valuable"){mrScore++}
-        if(MR.answers[3]==="valid"){mrScore++}
-        if(MR.answers[4]==="yes"){mrScore++}
+        //answers[0] is selected party no scoring applicable
+        if(MR.answers[1]==="PMLN"){mrScore++}
+        if(MR.answers[2]!=="Newly formed party with Initial leaders"){mrScore++}
+        if(MR.answers[3]==="Valuable" || MR.answers[3] ==="Admirable"){mrScore++}
+        if(MR.answers[4]==="Valid"){mrScore++}
+        if(MR.answers[5]==="yes"){mrScore++}
     } catch(e){
         console.log("Error in calculating MR score: ", e);
         return res.status(500).json({error: "Error in calculating MR score"});
