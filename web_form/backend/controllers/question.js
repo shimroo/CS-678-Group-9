@@ -16,6 +16,7 @@ export const addQuestion = async (req, res) => {
 
 export const getQuestion = async (req, res) => {
     const { section } = req.body;
+    console.log(req.body);
     try {
         console.log("Finding questions for section: "+section);
         const questions = await Question.find({ section });

@@ -1,77 +1,62 @@
-import React, { useEffect } from 'react';
-import '../styles/profile.css'; // Import the CSS file for styling
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from "../hooks/useAuth";
 import Navbar from './Navbar';
-import axios from 'axios';
-import { useAuthContext } from '../hooks/useAuth';
+import '../styles/FormPage.css';
+import '../styles/profile.css'; // Import the CSS file for styling
 
-interface Created {
-    _id: string;
-    title: string;
-    description: string;
-    starting_bid: number;
-    current_bid: number;
-    start_time: string;
-    end_time: string;
-}
-
-interface Owned {
-    _id: string;
-    title: string;
-    description: string;
-    starting_bid: number;
-    current_bid: number;
-    start_time: string;
-    end_time: string;
-}
 
 const Profile: React.FC = () => {
 
     const { user } = useAuthContext();                                  //for user authentication
     const username = user?.username;                                     //for username
-    const navigate = useNavigate();                                     //for navigation
-    const [created, setCreated] = React.useState<Created[]>([]);        //for storing created
-    const [owned, setOwned] = React.useState<Owned[]>([]);                         
+    const navigate = useNavigate();                                     //for navigation                   
     const [loading, setLoading] = React.useState<boolean>(true);        //for loading spinner
-    const [name, setName] = React.useState<string>('');                 //for name
+    const [CRTAnswers, setCRTAnswers] = useState<string[]>([]);
+    const [DLAnswers, setDLAnswers] = useState<string[]>([]);
+    const [MRAnswers, setMRAnswers] = useState<string[]>([]);
+    const [CRTScore, setCRTScore] = useState('');
+    const [DLScore, setDLScore] = useState('');
+    const [MRScore, setMRScore] = useState('');
+    const [stance1, setStance1] = useState('');
+    const [stance2, setStance2] = useState('');
 
-    const createAuction = () => {navigate('/create');}
-    const updatePassword = () => {navigate('/password');}
 
-    //function to 
-    const fetchCreated = async () => {
-        try {
-            const response = await axios.post('http://localhost:8000/user/list/created', {username} ); //fetch created
-            setCreated(response.data);                                                         //store created
-            setLoading(false);                                                                  //stop loading spinner
-        } catch (error) {
-            console.error(error);
+    
+
+    const userId = user._id;
+    const fetchAnswers = async() => {
+        const response = await axios.post(`http://localhost:8000/user/userAnswer`, {userId});
+        if (response.data) {
+            setCRTAnswers(response.data.crt.answers);
+            setDLAnswers(response.data.dl.answers);
+            setMRAnswers(response.data.mr.answers);
+            setCRTScore(response.data.score1)
+            setDLScore(response.data.score2)
+            setMRScore(response.data.score3)
         }
     }
 
-    const fetchListing = async () => {
-        try{
-            const response = await axios.post('http://localhost:8000/user/list/current',{username});
-            setOwned(response.data);
-            setLoading(false);
-        } catch (error) {
-            console.error(error)
+    const fetchStances = async () => {
+        const response1 = await axios.post(`http://localhost:8000/question/get`, {section: user.stance1});
+        if(response1.data){
+            setStance1(response1.data.questions)
         }
-    }
+        const response2 = await axios.post(`http://localhost:8000/question/get`, {section: user.stance2});
+        if(response2.data){
+            setStance2(response2.data.questions)
+        }
 
-    const fetchName = async () => {
-        try{
-            const response = await axios.post('http://localhost:8000/user/name',{username});
-            setName(response.data);
-            setLoading(false);
-        } catch (error) {
-            console.error(error)
-        }
+        console.log(response1.data);
+        console.log(response2.data);
     }
+    
+
+
     useEffect(() => {
-        fetchCreated();
-        fetchListing();
-        fetchName();
+        fetchAnswers();
+        fetchStances();
     }, []);
 
     return (
@@ -80,51 +65,53 @@ const Profile: React.FC = () => {
             <div className="profile_container">
                 <div className="profile_profile-info">
                     <div className="profile_user-details">
-                        <h2>Name: {name}</h2>
-                        <p>Username: {username}</p>
+                        <h2>Name: {user.name}</h2>
+                        <p> age: {user.age}</p>
+                        <p> gender: {user.gender}</p>
+                        <p> status: {user.status}</p>
+                        <p> stance 1: {user.stance1}</p>
+                        <p> stance 2: {user.stance2 }</p>
                     </div>
                 </div>
-                <div className="profile-actions">
-                    <button className="custom-button" onClick={createAuction}>Create Auction</button>
-                    <button className="custom-button" onClick={updatePassword}>Update Password</button>
-                </div>
-                <h3>Auctions created by you</h3>
+
+                
+                <h3>User Answers: </h3>
                 <div className="profile_auction-list"> 
-                    {loading ? (        
-                        <p>Loading...</p>
-                    ) : created.length === 0 ? (
-                        <p>No created found.</p>
-                    ) : (
-                        created.map((auction) => (
-                            <div className="profile_auction-card" key={auction._id}>
-                                <h4>{auction.title}</h4>
-                                <p>{auction.description}</p>
-                                <p>Start Price: ${auction.starting_bid}</p>
-                                <p>Current Price: ${auction.current_bid}</p>
-                                <p>Start Time: {auction.start_time}</p>
-                                <p>End Time: {auction.end_time}</p>
-                            </div>
-                        ))
-                    )} 
+                <p> CRT: </p>
+                <ul>
+                    {CRTAnswers.map((answer, index) => (
+                        <li key={index}>{answer}</li>
+                    ))}
+                </ul>
                 </div>
-                <h3>Auctions owned by you</h3>
+                <div className="profile_auction_list">
+                <p style={{ fontWeight: "bold" }}> Score: {CRTScore}</p>
+                </div>
+
                 <div className="profile_auction-list"> 
-                    {loading ? (        
-                        <p>Loading...</p>
-                    ) : owned.length === 0 ? (
-                        <p>No owned found.</p>
-                    ) : (
-                        owned.map((auction) => (
-                            <div className="profile_auction-card" key={auction._id}>
-                                <h4>{auction.title}</h4>
-                                <p>{auction.description}</p>
-                                <p>Start Price: ${auction.starting_bid}</p>
-                                <p>Current Price: ${auction.current_bid}</p>
-                                <p>Start Time: {auction.start_time}</p>
-                                <p>End Time: {auction.end_time}</p>
-                            </div>
-                        ))
-                    )} 
+                <p> DL: </p>
+                <ul>
+                    {DLAnswers.map((answer, index) => (
+                        <li key={index}>{answer}</li>
+                    ))}
+                </ul>
+                </div>
+                <div className="profile_auction_list">
+                <p style={{ fontWeight: "bold" }}> Score: {DLScore}</p>
+                </div>
+
+                <div className="profile_auction-list"> 
+                <p> MR: </p>
+                <ul>
+                    {MRAnswers.map((answer, index) => (
+                        <li key={index}>{answer}</li>
+                    ))}
+                </ul>
+                
+                </div>
+
+                <div className="profile_auction_list">
+                <p style={{ fontWeight: "bold" }}> Score: {MRScore}</p>
                 </div>
             </div>
         </body>

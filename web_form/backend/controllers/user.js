@@ -84,11 +84,13 @@ export const authenticateUser = async (req, res) => {
 
 // get user's answer data
 export const userAnswer = async (req, res)=> {
-    const {userId, stance, rating} = req.body;
+    const {userId} = req.body;
+    // console.log(req.body);
     //sequence of data: 
     // Gender, Age, Status, crtScore, dlScore, MR, Stance, Rating
 
-    const user = await User.findOne({userId});
+    const user = await User.findById(userId);
+    // console.log(user);
     if(!user){
         console.log("User not found!");
         return res.status(404)
@@ -100,7 +102,7 @@ export const userAnswer = async (req, res)=> {
         return res.status(404)
     }
     // calculate CRT score
-    const crtScore = 0;
+    let crtScore = 0;
     if(CRT.answers[0] === "First"){crtScore++;}
     if(CRT.answers[1] === "8"){crtScore++;}
     if(CRT.answers[2] === "Emily"){crtScore++;} 
@@ -111,7 +113,7 @@ export const userAnswer = async (req, res)=> {
     if(!DL){
         console.log("DL record not found for this user!")
     }
-    const dlScore = 0;
+    let dlScore = 0;
     if(DL.answers[0]==="I was able to connect"){dlScore++}
     if(DL.answers[1]==="I was able to open my mobile browser"){dlScore++}
     if(DL.answers[2]!=="I was unable to lookup"){dlScore++} 
@@ -122,23 +124,26 @@ export const userAnswer = async (req, res)=> {
 
 
     const MR = await Answer.findOne({user_id: userId, section:3})
-    const mrScore = 0;
+    let mrScore = 0;
     if(MR.answers[0]==="yes"){mrScore++}
     if(MR.answers[1]==="old"){mrScore++}
     if(MR.answers[2]==="valuable"){mrScore++}
     if(MR.answers[3]==="valid"){mrScore++}
     if(MR.answers[4]==="yes"){mrScore++}
 
-    const answer = {
-        gender: user.gender,
-        age: user.age,
-        status: user.status,
-        crtScore: crtScore,
-        dlScore: dlScore,
-        mrScore: mrScore,
-        stance: stance,
-        rating: rating,
-    }
+    // const answer = {
+    //     gender: user.gender,
+    //     age: user.age,
+    //     status: user.status,
+    //     crtScore: crtScore,
+    //     dlScore: dlScore,
+    //     mrScore: mrScore,
+    //     stance: stance,
+    //     rating: rating,
+    // }
+
+    return res.status(200).json({crt:CRT,score1:crtScore, dl:DL,score2:dlScore, mr:MR, score3: mrScore })
+
     // need to run selenium code here to use 'answer' and generate gpt's response.
 
 } 
