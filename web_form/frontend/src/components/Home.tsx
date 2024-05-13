@@ -11,6 +11,12 @@ const Home: React.FC = () => {
     const browse = () => {
         navigate('/section1') 
     }
+    const Urdu = () => {
+        navigate('/section1') 
+    }
+    const Ad = () => {
+        navigate('/show') 
+    }
     const username = user?.username;
 
     return (
@@ -20,7 +26,8 @@ const Home: React.FC = () => {
             <div className="container">
                 <div>
                     <button className="join" onClick={browse} >English</button>
-                    <button className="join" onClick={browse} >Urdu</button>
+                    <button className="join" onClick={Urdu} >Urdu</button>
+                    <button className="join" onClick={Ad} >Ad</button>
                 </div>
             </div>
         </body>

@@ -157,6 +157,7 @@ const QuestionPage: React.FC<{ section: string }> = ({ section }) => {
       nextSection = 8;
     }
 
+
     if (section === "4") {
       switch (answers[0]) {
         case "PTI":

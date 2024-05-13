@@ -14,6 +14,7 @@ import { BrowserRouter as Router, Route, Routes, BrowserRouter } from 'react-rou
 import { useAuthContext } from './hooks/useAuth';
 import { Navigate } from 'react-router-dom';
 import { useState } from 'react';
+import Show from './components/Show';
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
         <Route path="/test" element={ <SpecificAuction /> }/>
         <Route path="/Ad" element={ <CreateAd /> }/>
         <Route path="/inter" element={ <Inter /> }/>
+        <Route path="/show" element={ <Show /> }/>
         <Route path="/section1" element={<QuestionPage section="1"/>}/>
         <Route path="/section2" element={<QuestionPage section="2"/>}/>
         <Route path="/section3" element={<QuestionPage section="3"/>}/>
